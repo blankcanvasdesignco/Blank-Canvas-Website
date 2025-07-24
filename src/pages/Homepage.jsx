@@ -92,7 +92,7 @@ const Homepage = () => {
         onSettle: () => {
           movedTiles.add(i);
 
-          if (movedTiles.size === TOTAL_TILES) {
+          if (movedTiles.size === tiles.length) {
             setShowExport(true);
           }
         },
