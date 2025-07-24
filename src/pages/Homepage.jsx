@@ -10,16 +10,44 @@ import icon7 from "../assets/icons/tawk_icon.png";
 import html2canvas from "html2canvas";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import Navbar from "../components/Navbar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const movedTiles = new Set();
 const tiles = [
-  { icon: icon1, fact: "fact 1" },
-  { icon: icon2, fact: "fact 2" },
-  { icon: icon3, fact: "fact 3" },
-  { icon: icon4, fact: "fact 4" },
-  { icon: icon5, fact: "fact 5" },
-  { icon: icon6, fact: "fact 6" },
-  { icon: icon7, fact: "fact 7" },
+  {
+    icon: icon1,
+    fact: "fact 1",
+    link: "https://apps.apple.com/us/app/panoslice-carousel-splitter/id1592547810",
+  },
+  {
+    icon: icon2,
+    fact: "fact 2",
+    link: "https://apps.apple.com/us/app/lono-reels-templates-maker/id1632742723",
+  },
+  {
+    icon: icon3,
+    fact: "fact 3",
+    link: "https://apps.apple.com/us/app/swipekit-photo-swipe-carousel/id6745084550",
+  },
+  {
+    icon: icon4,
+    fact: "fact 4",
+    link: "https://apps.apple.com/us/app/rene-collage-vhs-ai-maker/id6744745951",
+  },
+  {
+    icon: icon5,
+    fact: "fact 5",
+    link: "https://apps.apple.com/us/app/grow-your-linkedin-lek-ai/id6702005680",
+  },
+  {
+    icon: icon6,
+    fact: "fact 6",
+    link: "https://apps.apple.com/us/app/parent-101-parenting-tips/id6737198424",
+  },
+  {
+    icon: icon7,
+    fact: "fact 7",
+    link: "https://apps.apple.com/us/app/tawk2-conversation-starters/id6738306118",
+  },
 ];
 
 const Homepage = () => {
@@ -41,6 +69,7 @@ const Homepage = () => {
     });
   }, []);
 
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -85,10 +114,14 @@ const Homepage = () => {
     }
   };
 
+  const handleNavigate = (link) => {
+    window.location.href = link;
+  };
+
   return (
     <div className="min-h-screen text-black">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center py-40 text-center">
+      <section className="flex flex-col items-center justify-center py-20 text-center">
         <h2 className="text-6xl font-semibold flex space-x-1">
           <span>C</span>
           <span>r</span>
@@ -140,7 +173,7 @@ const Homepage = () => {
               {tiles.map((item, i) => (
                 <div key={i} className="relative">
                   <div
-                    onClick={() => handleClick(i)}
+                    onClick={() => handleNavigate(item.link)}
                     className={`portfolio portfolio-${i} relative bg-[#000000] rounded-md w-40 border-[#374151] border-1  z-5`}
                   >
                     <img
