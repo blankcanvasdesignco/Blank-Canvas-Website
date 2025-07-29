@@ -72,39 +72,39 @@ const Homepage = () => {
       top: 0;
     `;
 
-    // const showAccessibleClone = createTimeline({
-    //   defaults: { ease: "inOutQuad" },
-    // })
-    //   .add(
-    //     $accessible,
-    //     {
-    //       opacity: 1,
-    //       z: "-5rem",
-    //     },
-    //     0
-    //   )
-    //   .add(
-    //     "p",
-    //     {
-    //       rotateX: 0,
-    //       rotateY: 360,
-    //       duration: 5000,
-    //       loop: true,
-    //       loopDelay: 1000,
-    //     },
-    //     0
-    //   )
-    //   .add(
-    //     split.words,
-    //     {
-    //       z: "5rem",
-    //       opacity: 0.75,
-    //       duration: 750,
-    //       delay: stagger(40, { from: "random" }),
-    //     },
-    //     0
-    //   )
-    //   .init();
+    const showAccessibleClone = createTimeline({
+      defaults: { ease: "inOutQuad" },
+    })
+      .add(
+        $accessible,
+        {
+          opacity: 1,
+          z: "-10rem",
+        },
+        0
+      )
+      .add(
+        "p",
+        {
+          rotateX: 0,
+          rotateY: 360,
+          duration: 5000,
+          loop: true,
+          loopDelay: 1000,
+        },
+        0
+      )
+      .add(
+        split.words,
+        {
+          z: "10rem",
+          opacity: 0.75,
+          duration: 750,
+          delay: stagger(40, { from: "random" }),
+        },
+        0
+      )
+      .init();
 
     const toggleAccessibleClone = () => {
       showAccessibleClone.alternate().resume();
