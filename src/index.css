@@ -1,1 +1,10 @@
+@font-face {
+  font-family: Syne;
+  src: url("../src/assets/fonts/Syne-Regular.ttf");
+}
+
 @import "tailwindcss";
+
+@theme {
+  --font-syne: Syne, "sans-serif";
+}

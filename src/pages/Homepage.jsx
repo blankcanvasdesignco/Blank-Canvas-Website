@@ -1,4 +1,4 @@
-import { animate, createDraggable, utils } from "animejs";
+import { animate, createDraggable, stagger, utils } from "animejs";
 import React, { useEffect, useRef, useState } from "react";
 import icon1 from "../assets/icons/panoslice_icon.png";
 import icon2 from "../assets/icons/lono_icon.png";
@@ -8,10 +8,11 @@ import icon5 from "../assets/icons/lek_icon.png";
 import icon6 from "../assets/icons/parent_icon.png";
 import icon7 from "../assets/icons/tawk_icon.png";
 import html2canvas from "html2canvas";
+import { createTimeline, text } from "animejs";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
-const movedTiles = new Set();
+
 const tiles = [
   {
     icon: icon1,
@@ -51,26 +52,89 @@ const tiles = [
 ];
 
 const Homepage = () => {
+  const [showExport, setShowExport] = useState(false);
+  const location = useLocation();
+  const canvasRef = useRef(null);
+
   useEffect(() => {
-    animate("span", {
-      // Property keyframes
-      y: [
-        { to: "-2.75rem", ease: "outExpo", duration: 600 },
-        { to: 0, ease: "outBounce", duration: 800, delay: 100 },
-      ],
-      rotate: {
-        from: "-1turn",
-        delay: 0,
-      },
-      delay: (_, i) => i * 50, // Function based value
-      ease: "inOutCirc",
-      loopDelay: 1000,
-      loop: true,
-    });
+    const [button] = utils.$(".test_button");
+    const split = text.split("p", { debug: true });
+    console.log(split);
+    const $accessible = split.$target.firstChild;
+
+    // Style the accessible overlay
+    $accessible.style.cssText = `
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    `;
+
+    // const showAccessibleClone = createTimeline({
+    //   defaults: { ease: "inOutQuad" },
+    // })
+    //   .add(
+    //     $accessible,
+    //     {
+    //       opacity: 1,
+    //       z: "-5rem",
+    //     },
+    //     0
+    //   )
+    //   .add(
+    //     "p",
+    //     {
+    //       rotateX: 0,
+    //       rotateY: 360,
+    //       duration: 5000,
+    //       loop: true,
+    //       loopDelay: 1000,
+    //     },
+    //     0
+    //   )
+    //   .add(
+    //     split.words,
+    //     {
+    //       z: "5rem",
+    //       opacity: 0.75,
+    //       duration: 750,
+    //       delay: stagger(40, { from: "random" }),
+    //     },
+    //     0
+    //   )
+    //   .init();
+
+    const toggleAccessibleClone = () => {
+      showAccessibleClone.alternate().resume();
+    };
+
+    button.addEventListener("click", toggleAccessibleClone);
+
+    // Cleanup listener
+    return () => {
+      button.removeEventListener("click", toggleAccessibleClone);
+    };
   }, []);
 
-  const navigate = useNavigate();
-  const location = useLocation();
+  // useEffect(() => {
+  //   animate("span", {
+  //     // Property keyframes
+  //     y: [
+  //       { to: "-2.75rem", ease: "outExpo", duration: 600 },
+  //       { to: 0, ease: "outBounce", duration: 800, delay: 100 },
+  //     ],
+  //     rotate: {
+  //       from: "-1turn",
+  //       delay: 0,
+  //     },
+  //     delay: (_, i) => i * 50, // Function based value
+  //     ease: "inOutCirc",
+  //     loopDelay: 1000,
+  //     loop: true,
+  //   });
+  // }, []);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -83,24 +147,16 @@ const Homepage = () => {
     }
   }, [location.state]);
 
-  const [showExport, setShowExport] = useState(false);
-
   useEffect(() => {
     for (let i = 0; i < tiles.length; i++) {
       createDraggable(`.portfolio-${i}`, {
         container: "#portfolio_container",
         onSettle: () => {
-          movedTiles.add(i);
-
-          if (movedTiles.size === tiles.length) {
-            setShowExport(true);
-          }
+          setShowExport(true);
         },
       });
     }
   }, []);
-
-  const canvasRef = useRef(null);
 
   const handleExport = async () => {
     if (canvasRef.current) {
@@ -121,34 +177,23 @@ const Homepage = () => {
   return (
     <div className="min-h-screen text-black">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center py-20 text-center">
-        <h2 className="text-6xl font-semibold flex space-x-1">
-          <span>C</span>
-          <span>r</span>
-          <span>e</span>
-          <span>a</span>
-          <span>t</span>
-          <span>i</span>
-          <span>n</span>
-          <span>g</span>
-          <span>&nbsp;</span>
-          <span>f</span>
-          <span>o</span>
-          <span>r</span>
-          <span>&nbsp;</span>
-          <span>C</span>
-          <span>r</span>
-          <span>e</span>
-          <span>a</span>
-          <span>t</span>
-          <span>o</span>
-          <span>r</span>
-          <span>s</span>
-        </h2>
+      <section className="flex flex-col items-center justify-center pt-20 pb-16 text-center">
+        <div className="relative flex flex-col items-center gap-6 p-10">
+          <div
+            className="relative text-wrapper"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            <p className="text-5xl font-bold transform-3d">
+              CREATING for CREATORS
+            </p>
+          </div>
 
-        <p className="my-6 text-2xl ">
-          building at the interesection of art, design and technology
-        </p>
+          <div>
+            <button className="test_button bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+              Toggle Accessible
+            </button>
+          </div>
+        </div>
 
         <button className="cursor-pointer mt-6 px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-transform duration-200 hover:scale-110">
           Connect
@@ -156,7 +201,7 @@ const Homepage = () => {
       </section>
 
       {/* Portfolio */}
-      <section id="portfolio">
+      <section id="portfolio" className="pt-2">
         <div className="bg-black text-white">
           <div className="flex flex-col items-center pt-10 pb-6 space-y-4">
             <h2 className="text-center text-4xl font-semibold">
@@ -169,12 +214,12 @@ const Homepage = () => {
             ref={canvasRef}
             className="flex flex-col items-center py-10 bg-[#000000]"
           >
-            <div className="grid grid-cols-4 gap-4 max-w-screen mx-auto px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-screen mx-auto px-4">
               {tiles.map((item, i) => (
                 <div key={i} className="relative">
                   <div
                     onClick={() => handleNavigate(item.link)}
-                    className={`portfolio portfolio-${i} relative bg-[#000000] rounded-md w-40 border-[#374151] border-1  z-5`}
+                    className={`portfolio portfolio-${i} relative bg-[#000000] rounded-md w-32 sm:w-40 border-[#374151] border-1 z-5`}
                   >
                     <img
                       className="object-cover rounded-md"
@@ -206,7 +251,10 @@ const Homepage = () => {
       </section>
 
       {/* Services */}
-      <section id="services" className="bg-black text-white py-12 px-4">
+      <section
+        id="services"
+        className="bg-black text-white py-12 px-4 flex flex-col md:block items-center"
+      >
         <h2 className="text-center text-4xl font-semibold mb-12">Services</h2>
 
         <div className="flex flex-col md:flex-row justify-center gap-10 text-center">
