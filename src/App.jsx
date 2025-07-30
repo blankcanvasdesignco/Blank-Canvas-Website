@@ -1,11 +1,10 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
-// import PortfolioPage from "./pages/PortfolioPage";
-// import ServicesPage from "./pages/ServicesPage";
-// import ContactPage from "./pages/ContactPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Homepage from "./pages/Homepage";
 import Contact from "./pages/Contact";
+import Services from "./pages/Services";
+import CanvasEditor from "./components/CanvasEditor";
 
 function App() {
   return (
@@ -14,10 +13,9 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="contact" element={<Contact />} />
-          {/* <Route path="/portfolio" element={<PortfolioPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/contact" element={<ContactPage />} /> */}
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/canvas" element={<CanvasEditor />} />
         </Routes>
         <Footer />
       </div>
