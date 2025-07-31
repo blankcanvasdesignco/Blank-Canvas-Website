@@ -12,41 +12,42 @@ import { createTimeline, text } from "animejs";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
+import CanvasEditor from "../components/CanvasEditor";
 
 const tiles = [
   {
     icon: icon1,
-    fact: "fact 1",
+    fact: "The first successful photograph was taken by Joseph Nicéphore Niépce in 1826 or 1827. It took 8 hours to expose!",
     link: "https://apps.apple.com/us/app/panoslice-carousel-splitter/id1592547810",
   },
   {
     icon: icon2,
-    fact: "fact 2",
+    fact: "Comes from Greek: 'photo' (light) and 'graphé' (drawing) — so it literally means 'drawing with light.'",
     link: "https://apps.apple.com/us/app/lono-reels-templates-maker/id1632742723",
   },
   {
     icon: icon3,
-    fact: "fact 3",
+    fact: "Although experiments started in the 1800s, true color photography didn’t become widely available until Kodachrome film in the 1930s.",
     link: "https://apps.apple.com/us/app/swipekit-photo-swipe-carousel/id6745084550",
   },
   {
     icon: icon4,
-    fact: "fact 4",
+    fact: "The default Windows XP wallpaper 'Bliss' by Charles O'Rear is considered the most viewed photo ever.",
     link: "https://apps.apple.com/us/app/rene-collage-vhs-ai-maker/id6744745951",
   },
   {
     icon: icon5,
-    fact: "fact 5",
+    fact: "Over 1.8 trillion photos were taken globally in 2023, with 92% taken on smartphones.",
     link: "https://apps.apple.com/us/app/grow-your-linkedin-lek-ai/id6702005680",
   },
   {
     icon: icon6,
-    fact: "fact 6",
+    fact: "The longest known camera exposure lasted 8 years — made by Regina Valkenborgh using a pinhole camera.",
     link: "https://apps.apple.com/us/app/parent-101-parenting-tips/id6737198424",
   },
   {
     icon: icon7,
-    fact: "fact 7",
+    fact: "Photoshop 1.0 was released in 1990 by Adobe. Today it's one of the most powerful editing tools globally.",
     link: "https://apps.apple.com/us/app/tawk2-conversation-starters/id6738306118",
   },
 ];
@@ -55,86 +56,6 @@ const Homepage = () => {
   const [showExport, setShowExport] = useState(false);
   const location = useLocation();
   const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const [button] = utils.$(".test_button");
-    const split = text.split("p", { debug: true });
-    console.log(split);
-    const $accessible = split.$target.firstChild;
-
-    // Style the accessible overlay
-    $accessible.style.cssText = `
-      opacity: 0;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-    `;
-
-    const showAccessibleClone = createTimeline({
-      defaults: { ease: "inOutQuad" },
-    })
-      .add(
-        $accessible,
-        {
-          opacity: 1,
-          z: "-10rem",
-        },
-        0
-      )
-      .add(
-        "p",
-        {
-          rotateX: 0,
-          rotateY: 360,
-          duration: 5000,
-          loop: true,
-          loopDelay: 1000,
-        },
-        0
-      )
-      .add(
-        split.words,
-        {
-          z: "10rem",
-          opacity: 0.75,
-          duration: 750,
-          delay: stagger(40, { from: "random" }),
-        },
-        0
-      )
-      .init();
-
-    const toggleAccessibleClone = () => {
-      showAccessibleClone.alternate().resume();
-    };
-
-    button.addEventListener("click", toggleAccessibleClone);
-
-    // Cleanup listener
-    return () => {
-      button.removeEventListener("click", toggleAccessibleClone);
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   animate("span", {
-  //     // Property keyframes
-  //     y: [
-  //       { to: "-2.75rem", ease: "outExpo", duration: 600 },
-  //       { to: 0, ease: "outBounce", duration: 800, delay: 100 },
-  //     ],
-  //     rotate: {
-  //       from: "-1turn",
-  //       delay: 0,
-  //     },
-  //     delay: (_, i) => i * 50, // Function based value
-  //     ease: "inOutCirc",
-  //     loopDelay: 1000,
-  //     loop: true,
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -177,44 +98,30 @@ const Homepage = () => {
   return (
     <div className="min-h-screen text-black">
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center pt-20 pb-16 text-center">
-        <div className="relative flex flex-col items-center gap-6 p-10">
-          <div
-            className="relative text-wrapper"
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            <p className="text-5xl font-bold transform-3d">
-              CREATING for CREATORS
-            </p>
-          </div>
-
-          <div>
-            <button className="test_button bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-              Toggle Accessible
-            </button>
-          </div>
+      <section className="flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded">
+        <div className="relative flex flex-col items-center gap-3 p-10">
+          <h1 className="text-4xl">Creating for Creators</h1>
+          <h3>building at the interesection of art, design and technology</h3>
         </div>
 
-        <button className="cursor-pointer mt-6 px-6 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition-transform duration-200 hover:scale-110">
+        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
           Connect
         </button>
       </section>
 
       {/* Portfolio */}
-      <section id="portfolio" className="pt-2">
+      <section id="portfolio" className="pt-2 font-unbounded">
         <div className="bg-black text-white">
-          <div className="flex flex-col items-center pt-10 pb-6 space-y-4">
-            <h2 className="text-center text-4xl font-semibold">
-              Things we've shipped
-            </h2>
-            <p>drag, discover and download</p>
+          <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
+            <h2 className="text-center text-4xl">Things we've shipped</h2>
+            <p className="text-gray-400">drag, discover and download</p>
           </div>
           <div
             id="portfolio_container"
             ref={canvasRef}
             className="flex flex-col items-center py-10 bg-[#000000]"
           >
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-screen mx-auto px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-screen mx-auto px-4">
               {tiles.map((item, i) => (
                 <div key={i} className="relative">
                   <div
@@ -227,42 +134,28 @@ const Homepage = () => {
                       alt={`Portfolio icon ${i + 1}`}
                     />
                   </div>
-                  <div className="absolute border border-[#6b7280] border-dashed rounded-md inset-0 flex items-center justify-center text-center p-2 pointer-events-none">
-                    <p className="text-sm font-medium text-[#ffffff]">
-                      {item.fact}
-                    </p>
+                  <div className="absolute border border-[#6b7280] border-dashed rounded-md inset-0 flex items-center justify-center text-center p-4 pointer-events-none">
+                    <p className="text-[8px] sm:text-xs text-gray-400">{item.fact}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          {showExport && (
-            <div className="flex justify-center pt-4 pb-8">
-              <button
-                onClick={() => handleExport()}
-                className="flex cursor-pointer justify-center space-x-2 items-center py-2 px-4 border rounded-3xl w-40 transition-transform duration-200 hover:scale-110"
-              >
-                <p>Save Canvas</p>
-                <ArrowDownOnSquareIcon className="size-6" />
-              </button>
-            </div>
-          )}
         </div>
       </section>
 
       {/* Services */}
       <section
         id="services"
-        className="bg-black text-white py-12 px-4 flex flex-col md:block items-center"
+        className="bg-black text-white py-12 px-4 flex flex-col justify-center items-center space-y-20 font-unbounded"
       >
-        <h2 className="text-center text-4xl font-semibold mb-12">Services</h2>
+        <h2 className="text-center text-4xl">Services</h2>
 
-        <div className="flex flex-col md:flex-row justify-center gap-10 text-center">
+        <div className="flex flex-col lg:flex-row lg:justify-around mx-8 lg:mx-32 lg:space-x-24 space-y-14 lg:space-y-0 text-center">
           {/* Design */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="text-5xl mb-4">🔺</div>{" "}
-            {/* Replace with actual icon */}
-            <h3 className="text-xl font-bold mb-2">Design</h3>
+          <div className="flex flex-1/3 flex-col items-center max-w-120 lg:max-w-60 space-y-4">
+            <div className="text-5xl">🔺</div> {/* Replace with actual icon */}
+            <h3 className="text-xl">Design</h3>
             <p className="text-sm leading-relaxed">
               we design clean, usable interfaces that look good and feel better.
               wireframes, ui, ux, all done in-house, always with taste.
@@ -270,10 +163,9 @@ const Homepage = () => {
           </div>
 
           {/* Dev */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="text-5xl mb-4">🧠</div>{" "}
-            {/* Replace with actual icon */}
-            <h3 className="text-xl font-bold mb-2">Dev</h3>
+          <div className="flex flex-1/3 flex-col items-center max-w-120 lg:max-w-60 space-y-4">
+            <div className="text-5xl">🧠</div> {/* Replace with actual icon */}
+            <h3 className="text-xl">Dev</h3>
             <p className="text-sm leading-relaxed">
               swift and swiftui is our native tongue. we don’t just prototype,
               we ship. from mvps to app store-ready builds, we write fast,
@@ -282,10 +174,9 @@ const Homepage = () => {
           </div>
 
           {/* GTM */}
-          <div className="flex flex-col items-center max-w-xs">
-            <div className="text-5xl mb-4">👜</div>{" "}
-            {/* Replace with actual icon */}
-            <h3 className="text-xl font-bold mb-2">GTM</h3>
+          <div className="flex flex-1/3 flex-col items-center max-w-120 lg:max-w-60 space-y-4">
+            <div className="text-5xl">👜</div> {/* Replace with actual icon */}
+            <h3 className="text-xl">GTM</h3>
             <p className="text-sm leading-relaxed">
               we help your product get seen. naming, copy, screenshots,
               onboarding, aso, launch included.
@@ -294,11 +185,26 @@ const Homepage = () => {
         </div>
 
         {/* Button */}
-        <div className="flex justify-center mt-12">
-          <button className="cursor-pointer px-6 py-2 rounded-full bg-white text-black hover:bg-gray-200 text-lg font-medium shadow-md transition-transform duration-200 hover:scale-110">
-            Learn More
-          </button>
+
+        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
+          Learn More
+        </button>
+      </section>
+
+      <section className="bg-black text-white p-12 font-unbounded">
+        <CanvasEditor />
+      </section>
+
+      <section className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded">
+        <div className="relative flex flex-col items-center gap-3 p-10">
+          <h1 className="text-4xl">Anything great</h1>
+          <h1 className="text-4xl">begins on a</h1>
+          <h1 className="text-4xl font-bethellen">Blank Canvas</h1>
         </div>
+
+        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
+          Let's work together
+        </button>
       </section>
     </div>
   );

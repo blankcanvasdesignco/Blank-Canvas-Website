@@ -2,9 +2,24 @@
   font-family: Syne;
   src: url("../src/assets/fonts/Syne-Regular.ttf");
 }
+@font-face {
+  font-family: Sora;
+  src: url("../src/assets/fonts/Sora-Regular.ttf");
+}
+@font-face {
+  font-family: BethEllen;
+  src: url("../src/assets/fonts/BethEllen-Regular.ttf");
+}
+@font-face {
+  font-family: Unbounded;
+  src: url("../src/assets/fonts/Unbounded-Regular.ttf");
+}
 
 @import "tailwindcss";
 
 @theme {
   --font-syne: Syne, "sans-serif";
+  --font-sora: Sora, "sans-serif";
+  --font-bethellen: BethEllen, "sans-serif";
+  --font-unbounded: Unbounded, "sans-serif";
 }

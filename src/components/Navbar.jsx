@@ -16,22 +16,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center px-6 py-2 text-sm bg-[#dcebca] border-[#606f49] border-b sticky top-0 z-20">
+    <nav className="flex justify-between items-center py-6 px-12 text-sm font-unbounded z-20">
       <div className="font-bold text-lg">
         <Link to="/">Logo</Link>
       </div>
       <div className="space-x-6">
         <button
           className="cursor-pointer"
-          onClick={() => handleScrollNavigation("services")}
-        >
-          Services
-        </button>
-        <button
-          className="cursor-pointer"
           onClick={() => handleScrollNavigation("portfolio")}
         >
           Portfolio
+        </button>
+        <button
+          className="cursor-pointer"
+          onClick={() => handleScrollNavigation("services")}
+        >
+          Services
         </button>
         <Link to="/contact">Contact</Link>
       </div>

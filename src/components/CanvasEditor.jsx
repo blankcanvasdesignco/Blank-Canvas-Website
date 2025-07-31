@@ -20,15 +20,17 @@ export default function CanvasEditor() {
     e.preventDefault();
     const data = JSON.parse(e.dataTransfer.getData("item"));
     const rect = canvasRef.current.getBoundingClientRect();
+
     const newElement = {
       id: nanoid(),
       type: data.type,
       content: data.content,
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      x: e.clientX - rect.left - 60, // 60 = width / 2 (120 / 2)
+      y: e.clientY - rect.top - 60,
       width: 120,
       height: 120,
     };
+
     setElements((prev) => [...prev, newElement]);
   };
 
@@ -39,25 +41,12 @@ export default function CanvasEditor() {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-6">
       {/* Tray */}
-      <div className="flex gap-4 border-b pb-2 overflow-x-auto">
-        {trayItems.map((item) => (
-          <div
-            key={item.id}
-            draggable
-            onDragStart={(e) =>
-              e.dataTransfer.setData("item", JSON.stringify(item))
-            }
-            className="p-2 bg-white border rounded cursor-grab shadow"
-          >
-            {item.type === "text" ? (
-              <span>{item.content}</span>
-            ) : (
-              <img src={item.content} alt="item" className="h-12" />
-            )}
-          </div>
-        ))}
+
+      <div className="flex flex-col items-center space-y-3">
+        <h2 className="text-center text-4xl">What's your internet aura?</h2>
+        <p className="text-gray-400">drop things on the blank canvas</p>
       </div>
 
       {/* Canvas */}
@@ -65,13 +54,17 @@ export default function CanvasEditor() {
         ref={canvasRef}
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
-        className="relative w-full h-[500px] bg-white border shadow-md overflow-hidden"
+        className="relative w-full h-[500px] bg-white border rounded-md shadow-md overflow-hidden"
       >
         {elements.map((el) => (
           <Rnd
             key={el.id}
-            size={{ width: el.width, height: el.height }}
-            position={{ x: el.x, y: el.y }}
+            default={{
+              x: el.x,
+              y: el.y,
+              width: el.width,
+              height: el.height,
+            }}
             onDragStop={(e, d) => updateElement(el.id, { x: d.x, y: d.y })}
             onResizeStop={(e, dir, ref, delta, pos) =>
               updateElement(el.id, {
@@ -95,6 +88,25 @@ export default function CanvasEditor() {
               )}
             </div>
           </Rnd>
+        ))}
+      </div>
+
+      <div className="flex gap-4 pb-2 overflow-x-auto">
+        {trayItems.map((item) => (
+          <div
+            key={item.id}
+            draggable
+            onDragStart={(e) =>
+              e.dataTransfer.setData("item", JSON.stringify(item))
+            }
+            className="p-2 text-black bg-white border rounded cursor-grab shadow"
+          >
+            {item.type === "text" ? (
+              <span>{item.content}</span>
+            ) : (
+              <img src={item.content} alt="item" className="h-12" />
+            )}
+          </div>
         ))}
       </div>
     </div>
