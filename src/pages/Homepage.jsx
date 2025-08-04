@@ -1,4 +1,10 @@
-import { animate, createDraggable, stagger, utils } from "animejs";
+import {
+  animate,
+  createAnimatable,
+  createDraggable,
+  stagger,
+  utils,
+} from "animejs";
 import React, { useEffect, useRef, useState } from "react";
 import icon1 from "../assets/icons/panoslice_icon.png";
 import icon2 from "../assets/icons/lono_icon.png";
@@ -57,6 +63,43 @@ const Homepage = () => {
   const location = useLocation();
   const canvasRef = useRef(null);
 
+  const dotRef = useRef(null);
+  const wrapperRef = useRef(null);
+  const animatableRef = useRef(null);
+
+  useEffect(() => {
+    const dot = dotRef.current;
+    const wrapper = wrapperRef.current;
+
+    if (!dot || !wrapper) return;
+
+    const bounds = wrapper.getBoundingClientRect();
+
+    animatableRef.current = createAnimatable(dot, {
+      x: 400, // 400ms for x transition
+      y: 400, // 400ms for y transition
+      ease: "out(3)",
+    });
+
+    const onMouseMove = (e) => {
+      const { left, top, width, height } = bounds;
+      const hw = width / 2;
+      const hh = height / 2;
+
+      const x = utils.clamp(e.clientX - left - 8, 0, width - 16); // offset for center
+      const y = utils.clamp(e.clientY - top - 8, 0, height - 16);
+
+      animatableRef.current.x(x);
+      animatableRef.current.y(y);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+  }, []);
+
   useEffect(() => {
     if (location.state?.scrollTo) {
       const el = document.getElementById(location.state.scrollTo);
@@ -109,6 +152,16 @@ const Homepage = () => {
         </button>
       </section>
 
+      <div
+        ref={wrapperRef}
+        className="relative w-full h-[300px] bg-black overflow-hidden"
+      >
+        <div
+          ref={dotRef}
+          className="absolute w-4 h-4 bg-white rounded-full"
+        ></div>
+      </div>
+
       {/* Portfolio */}
       <section id="portfolio" className="pt-2 font-unbounded">
         <div className="bg-black text-white">
@@ -135,7 +188,9 @@ const Homepage = () => {
                     />
                   </div>
                   <div className="absolute border border-[#6b7280] border-dashed rounded-md inset-0 flex items-center justify-center text-center p-4 pointer-events-none">
-                    <p className="text-[8px] sm:text-xs text-gray-400">{item.fact}</p>
+                    <p className="text-[8px] sm:text-xs text-gray-400">
+                      {item.fact}
+                    </p>
                   </div>
                 </div>
               ))}
