@@ -8,13 +8,26 @@ export default function CanvasEditor() {
     {
       id: "img1",
       type: "image",
-      content: "https://img.freepik.com/premium-vector/pattern_440834-2627.jpg",
+      content:
+        "https://img.freepik.com/premium-vector/simple-geometric-art-poster-with-simple-shape-figure-red-tones_924514-85.jpg",
     },
     {
       id: "img2",
       type: "image",
       content:
-        "https://img.freepik.com/premium-vector/geometric-pattern-seamless-vector-background_3811-8735.jpg?w=360",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAtUoqvSuaXlKkgWKMyT4GFhJeZK-s6E_qaQ&s",
+    },
+    {
+      id: "shape1",
+      type: "shape",
+      shape: "circle",
+      color: "#ff1f1f",
+    },
+    {
+      id: "shape2",
+      type: "shape",
+      shape: "square",
+      color: "#00b4d8",
     },
   ]);
 
@@ -27,11 +40,13 @@ export default function CanvasEditor() {
       id: nanoid(),
       type: data.type,
       content: data.content,
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top,
+      shape: data.shape,
+      color: data.color,
+      x: e.clientX - rect.left - 60,
+      y: e.clientY - rect.top - 60,
       width: 120,
       height: 120,
-      zIndex: canvasItems.length + 1, // initial stacking order
+      zIndex: canvasItems.length + 1,
     };
 
     setCanvasItems((prev) => [...prev, newItem]);
@@ -144,7 +159,7 @@ export default function CanvasEditor() {
         ref={canvasRef}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="relative w-full h-[500px] border border-gray-300 bg-white rounded-md shadow-md"
+        className="relative w-full h-[500px] border border-gray-300 bg-white rounded-md shadow-md overflow-hidden"
       >
         {canvasItems.map((item) => (
           <div
@@ -159,12 +174,21 @@ export default function CanvasEditor() {
               zIndex: item.zIndex,
             }}
           >
-            <img
-              src={item.content}
-              alt="canvas item"
-              className="w-full h-full object-cover rounded"
-              draggable={false}
-            />
+            {item.type === "image" ? (
+              <img
+                src={item.content}
+                alt="canvas item"
+                className="w-full h-full object-cover rounded"
+                draggable={false}
+              />
+            ) : item.type === "shape" ? (
+              <div
+                className={`w-full h-full ${
+                  item.shape === "circle" ? "rounded-full" : ""
+                }`}
+                style={{ backgroundColor: item.color }}
+              />
+            ) : null}
 
             {/* Resize handle */}
             <div
@@ -185,16 +209,30 @@ export default function CanvasEditor() {
             onDragStart={(e) =>
               e.dataTransfer.setData(
                 "item",
-                JSON.stringify({ type: item.type, content: item.content })
+                JSON.stringify({
+                  type: item.type,
+                  content: item.content,
+                  shape: item.shape,
+                  color: item.color,
+                })
               )
             }
-            className="w-16 h-16 border border-gray-400 rounded-md overflow-hidden shadow"
+            className="w-16 h-16 border border-gray-400 rounded-md overflow-hidden shadow flex items-center justify-center"
           >
-            <img
-              src={item.content}
-              alt="tray item"
-              className="w-full h-full object-cover"
-            />
+            {item.type === "image" ? (
+              <img
+                src={item.content}
+                alt="tray item"
+                className="w-full h-full object-cover"
+              />
+            ) : item.type === "shape" ? (
+              <div
+                className={`w-10 h-10 ${
+                  item.shape === "circle" ? "rounded-full" : ""
+                }`}
+                style={{ backgroundColor: item.color }}
+              />
+            ) : null}
           </div>
         ))}
 
