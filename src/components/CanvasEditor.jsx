@@ -1,5 +1,10 @@
 import React, { useRef, useState } from "react";
 import { nanoid } from "nanoid";
+import {
+  ArrowDownOnSquareIcon,
+  ArrowPathIcon,
+} from "@heroicons/react/24/solid";
+import html2canvas from "html2canvas";
 
 export default function CanvasEditor() {
   const canvasRef = useRef(null);
@@ -9,7 +14,7 @@ export default function CanvasEditor() {
       id: "img1",
       type: "image",
       content:
-        "https://img.freepik.com/premium-vector/simple-geometric-art-poster-with-simple-shape-figure-red-tones_924514-85.jpg",
+        "https://images.unsplash.com/photo-1567360425618-1594206637d2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBhdHRlcm58ZW58MHx8MHx8fDA%3D",
     },
     {
       id: "img2",
@@ -152,14 +157,44 @@ export default function CanvasEditor() {
     document.addEventListener("mouseup", handleMouseUp);
   };
 
+  const downloadCanvas = async () => {
+    if (canvasRef.current) {
+      const canvasImage = await html2canvas(canvasRef.current, {
+        useCORS: true,
+        backgroundColor: null,
+      });
+      const dataURL = canvasImage.toDataURL("image/png");
+
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "canvas.png";
+      link.click();
+    }
+  };
+
   return (
     <div className="space-y-4 p-4">
       {/* Canvas */}
+      <div className="flex items-center justify-between">
+        <ArrowPathIcon
+          className="bottom-4 left-4 h-6 w-6 text-white cursor-pointer"
+          onClick={() => {
+            setCanvasItems((prev) => prev.slice(0, -1)); // removes last item
+          }}
+        />
+        <button
+          onClick={downloadCanvas}
+          className="bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer text-xs text-white px-4 py-2 rounded-full border-2 bg-black transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
+          Save Canvas
+          <ArrowDownOnSquareIcon className="w-4 h-4" />
+        </button>
+      </div>
       <div
         ref={canvasRef}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="relative w-full h-[500px] border border-gray-300 bg-white rounded-md shadow-md overflow-hidden"
+        className="relative w-full h-[500px] border border-[#D1D5DB] bg-white rounded-md shadow-md overflow-hidden"
       >
         {canvasItems.map((item) => (
           <div
@@ -180,6 +215,7 @@ export default function CanvasEditor() {
                 alt="canvas item"
                 className="w-full h-full object-cover rounded"
                 draggable={false}
+                crossOrigin="anonymous"
               />
             ) : item.type === "shape" ? (
               <div
@@ -238,7 +274,7 @@ export default function CanvasEditor() {
 
         {/* Upload button */}
         <div className="w-16 h-16 border border-gray-400 rounded-md flex items-center justify-center shadow relative">
-          <span className="text-xl font-bold">+</span>
+          <span className="text-xl text-black">+</span>
           <input
             type="file"
             accept="image/*"
