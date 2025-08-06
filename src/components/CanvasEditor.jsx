@@ -207,6 +207,7 @@ export default function CanvasEditor() {
               width: item.width,
               height: item.height,
               zIndex: item.zIndex,
+              userSelect: "none",
             }}
           >
             {item.type === "image" ? (
