@@ -238,7 +238,7 @@ export default function CanvasEditor() {
 
       {/* Tray */}
       <div className="flex justify-center gap-4 p-2 bg-gray-200 rounded-md">
-        {trayItems.map((item) => (
+        {trayItems.map((item, index) => (
           <div
             key={item.id}
             draggable
@@ -253,6 +253,31 @@ export default function CanvasEditor() {
                 })
               )
             }
+            onClick={() => {
+              if (item.type === "shape") {
+                const colorOptions = [
+                  "#ff1f1f",
+                  "#00b4d8",
+                  "#48cae4",
+                  "#ffb703",
+                  "#8338ec",
+                  "#06d6a0",
+                ];
+                const newColor =
+                  colorOptions[Math.floor(Math.random() * colorOptions.length)];
+
+                setTrayItems((prev) =>
+                  prev.map((trayItem, i) =>
+                    i === index
+                      ? {
+                          ...trayItem,
+                          color: newColor,
+                        }
+                      : trayItem
+                  )
+                );
+              }
+            }}
             className="w-16 h-16 border border-gray-400 rounded-md overflow-hidden shadow flex items-center justify-center"
           >
             {item.type === "image" ? (
@@ -263,7 +288,7 @@ export default function CanvasEditor() {
               />
             ) : item.type === "shape" ? (
               <div
-                className={`w-10 h-10 ${
+                className={`w-10 h-10 transition-all duration-500 ease-in-out ${
                   item.shape === "circle" ? "rounded-full" : ""
                 }`}
                 style={{ backgroundColor: item.color }}
