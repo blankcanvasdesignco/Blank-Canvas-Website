@@ -1,66 +1,46 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import { ScissorsIcon } from "@heroicons/react/24/solid";
 
 const Contact = () => {
   return (
-    <div>
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center px-4 py-16">
-        <h1 className="text-4xl font-bold mb-4 text-center">Get in Touch</h1>
-        <p className="text-lg text-gray-400 mb-10 text-center max-w-xl">
-          Whether you have a question, a project idea, or just want to say hello
-          — feel free to reach out.
+    <div className="bg-black text-white font-unbounded pt-12 py-16">
+      <div className="flex flex-col items-center justify-center px-4 py-20">
+        <h1 className="text-3xl font-semibold mb-2">Let’s Talk</h1>
+        <p className="text-sm text-gray-200 text-center mb-10">
+          Got a question, idea, or just want to say hi?
+          <br />
+          We'd love to hear from you.
         </p>
 
-        <form className="w-full max-w-2xl bg-gray-900 p-8 rounded-xl shadow-lg space-y-6">
-          <div className="flex flex-col md:flex-row gap-6">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full px-4 py-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full px-4 py-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
-          <textarea
-            rows="5"
-            placeholder="Your Message"
-            className="w-full px-4 py-3 rounded-md bg-gray-800 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          ></textarea>
-          <button
-            type="submit"
-            className="w-full bg-purple-600 hover:bg-purple-700 transition duration-200 text-white py-3 rounded-md font-semibold shadow-md"
-          >
-            Send Message
-          </button>
-        </form>
+        <div className="relative border border-dashed border-white p-6 w-full max-w-xl rounded-lg">
+          <form className="space-y-4">
+            <div className="flex flex-col md:flex-row justify-between">
+              <input
+                type="text"
+                placeholder="Your name"
+                className="w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
+              />
+            </div>
+            <textarea
+              placeholder="Once upon a time..."
+              rows={6}
+              className="w-full px-4 py-3 bg-black border border-white rounded-xl outline-none text-white placeholder-gray-500 resize-y"
+            ></textarea>
+            <button
+              type="submit"
+              className="w-full bg-white text-black px-6 py-3 rounded-full hover:bg-gray-200 transition"
+            >
+              Send
+            </button>
+          </form>
 
-        {/* Social links */}
-        <div className="flex space-x-6 mt-10 text-gray-400">
-          <a
-            href="mailto:hello@example.com"
-            className="hover:text-white transition duration-200"
-          >
-            📧 Email
-          </a>
-          <a
-            href="https://twitter.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition duration-200"
-          >
-            🐦 Twitter
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-white transition duration-200"
-          >
-            💼 LinkedIn
-          </a>
+          <ScissorsIcon className="absolute bg-black w-4 left-[49%] -bottom-2" />
         </div>
       </div>
     </div>

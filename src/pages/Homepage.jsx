@@ -19,6 +19,7 @@ import { ArrowDownOnSquareIcon } from "@heroicons/react/24/solid";
 import Navbar from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import CanvasEditor from "../components/CanvasEditor";
+import DotTracker from "../components/DotTracker";
 
 const tiles = [
   {
@@ -59,46 +60,7 @@ const tiles = [
 ];
 
 const Homepage = () => {
-  const [showExport, setShowExport] = useState(false);
-  const location = useLocation();
   const canvasRef = useRef(null);
-
-  const dotRef = useRef(null);
-  const wrapperRef = useRef(null);
-  const animatableRef = useRef(null);
-
-  useEffect(() => {
-    const dot = dotRef.current;
-    const wrapper = wrapperRef.current;
-
-    if (!dot || !wrapper) return;
-
-    const bounds = wrapper.getBoundingClientRect();
-
-    animatableRef.current = createAnimatable(dot, {
-      x: 400, // 400ms for x transition
-      y: 400, // 400ms for y transition
-      ease: "out(3)",
-    });
-
-    const onMouseMove = (e) => {
-      const { left, top, width, height } = bounds;
-      const hw = width / 2;
-      const hh = height / 2;
-
-      const x = utils.clamp(e.clientX - left - 8, 0, width - 16); // offset for center
-      const y = utils.clamp(e.clientY - top - 8, 0, height - 16);
-
-      animatableRef.current.x(x);
-      animatableRef.current.y(y);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove);
-    };
-  }, []);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -115,24 +77,9 @@ const Homepage = () => {
     for (let i = 0; i < tiles.length; i++) {
       createDraggable(`.portfolio-${i}`, {
         container: "#portfolio_container",
-        onSettle: () => {
-          setShowExport(true);
-        },
       });
     }
   }, []);
-
-  const handleExport = async () => {
-    if (canvasRef.current) {
-      const canvas = await html2canvas(canvasRef.current);
-      const dataURL = canvas.toDataURL("image/png");
-
-      const link = document.createElement("a");
-      link.href = dataURL;
-      link.download = "my-collage.png";
-      link.click();
-    }
-  };
 
   const handleNavigate = (link) => {
     window.location.href = link;
@@ -140,8 +87,12 @@ const Homepage = () => {
 
   return (
     <div className="min-h-screen text-black">
+      <DotTracker />
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded">
+      <section
+        data-dot-color="black"
+        className="bg-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
+      >
         <div className="relative flex flex-col items-center gap-3 p-10">
           <h1 className="text-4xl">Creating for Creators</h1>
           <h3>building at the interesection of art, design and technology</h3>
@@ -152,18 +103,12 @@ const Homepage = () => {
         </button>
       </section>
 
-      <div
-        ref={wrapperRef}
-        className="relative w-full h-[300px] bg-black overflow-hidden"
-      >
-        <div
-          ref={dotRef}
-          className="absolute w-4 h-4 bg-white rounded-full"
-        ></div>
-      </div>
-
       {/* Portfolio */}
-      <section id="portfolio" className="pt-2 font-unbounded">
+      <section
+        data-dot-color="white"
+        id="portfolio"
+        className="pt-2 font-unbounded"
+      >
         <div className="bg-black text-white">
           <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
             <h2 className="text-center text-4xl">Things we've shipped</h2>
@@ -201,6 +146,7 @@ const Homepage = () => {
 
       {/* Services */}
       <section
+        data-dot-color="white"
         id="services"
         className="bg-black text-white py-12 px-4 flex flex-col justify-center items-center space-y-20 font-unbounded"
       >
@@ -246,11 +192,17 @@ const Homepage = () => {
         </button>
       </section>
 
-      <section className="bg-black text-white p-12 font-unbounded">
+      <section
+        data-dot-color="black"
+        className="bg-black text-white p-12 font-unbounded"
+      >
         <CanvasEditor />
       </section>
 
-      <section className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded">
+      <section
+        data-dot-color="white"
+        className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
+      >
         <div className="relative flex flex-col items-center gap-3 p-10">
           <h1 className="text-4xl">Anything great</h1>
           <h1 className="text-4xl">begins on a</h1>
