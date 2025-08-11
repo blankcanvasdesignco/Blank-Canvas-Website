@@ -9,11 +9,7 @@ import html2canvas from "html2canvas";
 
 const ShapeRenderer = ({ shape, color, width, height }) => {
   if (shape === "triangle") {
-    // Increase height & base so it looks balanced with circle/square
-    const scaleFactor = 1.2; // tweak until it visually matches
-    const halfW = (width * scaleFactor) / 2;
-    const scaledHeight = height * scaleFactor;
-
+    const halfW = width / 2;
     return (
       <div
         style={{
@@ -21,7 +17,7 @@ const ShapeRenderer = ({ shape, color, width, height }) => {
           height: 0,
           borderLeft: `${halfW}px solid transparent`,
           borderRight: `${halfW}px solid transparent`,
-          borderBottom: `${scaledHeight}px solid ${color}`,
+          borderBottom: `${height}px solid ${color}`,
         }}
       />
     );
@@ -366,8 +362,8 @@ export default function CanvasEditor() {
                   <ShapeRenderer
                     shape={item.shape}
                     color={item.color}
-                    width={40} // match your w-12 (~48px) or w-10 size
-                    height={40}
+                    width={48} // match your w-12 (~48px) or w-10 size
+                    height={48}
                   />
                 </div>
               ) : item.type === "image" ? (
