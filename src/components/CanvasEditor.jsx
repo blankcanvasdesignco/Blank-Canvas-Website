@@ -3,30 +3,52 @@ import { nanoid } from "nanoid";
 import {
   ArrowDownOnSquareIcon,
   ArrowPathIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import html2canvas from "html2canvas";
+
+const ShapeRenderer = ({ shape, color, width, height }) => {
+  if (shape === "triangle") {
+    // Increase height & base so it looks balanced with circle/square
+    const scaleFactor = 1.2; // tweak until it visually matches
+    const halfW = (width * scaleFactor) / 2;
+    const scaledHeight = height * scaleFactor;
+
+    return (
+      <div
+        style={{
+          width: 0,
+          height: 0,
+          borderLeft: `${halfW}px solid transparent`,
+          borderRight: `${halfW}px solid transparent`,
+          borderBottom: `${scaledHeight}px solid ${color}`,
+        }}
+      />
+    );
+  }
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: color,
+        borderRadius: shape === "circle" ? "9999px" : "0px",
+      }}
+    />
+  );
+};
 
 export default function CanvasEditor() {
   const canvasRef = useRef(null);
   const [canvasItems, setCanvasItems] = useState([]);
+  const [showPalette, setShowPalette] = useState(false);
   const [trayItems, setTrayItems] = useState([
-    {
-      id: "img1",
-      type: "image",
-      content:
-        "https://images.unsplash.com/photo-1567360425618-1594206637d2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBhdHRlcm58ZW58MHx8MHx8fDA%3D",
-    },
-    {
-      id: "img2",
-      type: "image",
-      content:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAtUoqvSuaXlKkgWKMyT4GFhJeZK-s6E_qaQ&s",
-    },
     {
       id: "shape1",
       type: "shape",
       shape: "circle",
-      color: "#ff1f1f",
+      color: "#8b00ff",
     },
     {
       id: "shape2",
@@ -34,7 +56,30 @@ export default function CanvasEditor() {
       shape: "square",
       color: "#00b4d8",
     },
+    {
+      id: "shape3",
+      type: "shape",
+      shape: "triangle",
+      color: "#ff1493",
+    },
   ]);
+  const colors = [
+    "#ff1f1f",
+    "#00b4d8",
+    "#48cae4",
+    "#ffb703",
+    "#8338ec",
+    "#06d6a0",
+    "#ff7f50",
+    "#ff69b4",
+    "#1e90ff",
+    "#ffd700",
+    "#7fff00",
+    "#ff4500",
+    "#8b00ff",
+    "#00ced1",
+    "#ff1493",
+  ];
 
   const handleDrop = (e) => {
     e.preventDefault();
@@ -219,11 +264,11 @@ export default function CanvasEditor() {
                 crossOrigin="anonymous"
               />
             ) : item.type === "shape" ? (
-              <div
-                className={`w-full h-full ${
-                  item.shape === "circle" ? "rounded-full" : ""
-                }`}
-                style={{ backgroundColor: item.color }}
+              <ShapeRenderer
+                shape={item.shape}
+                color={item.color}
+                width={item.width}
+                height={item.height}
               />
             ) : null}
 
@@ -238,84 +283,130 @@ export default function CanvasEditor() {
       </div>
 
       {/* Tray */}
-      <div className="flex justify-center gap-4 p-2 bg-gray-200 rounded-md">
-        {trayItems.map((item, index) => (
-          <div
-            key={item.id}
-            draggable
-            onDragStart={(e) =>
-              e.dataTransfer.setData(
-                "item",
-                JSON.stringify({
-                  type: item.type,
-                  content: item.content,
-                  shape: item.shape,
-                  color: item.color,
-                })
-              )
-            }
-            onClick={() => {
-              if (item.type === "shape") {
-                const colorOptions = [
-                  "#ff1f1f",
-                  "#00b4d8",
-                  "#48cae4",
-                  "#ffb703",
-                  "#8338ec",
-                  "#06d6a0",
-                ];
-                const newColor =
-                  colorOptions[Math.floor(Math.random() * colorOptions.length)];
-
-                setTrayItems((prev) =>
-                  prev.map((trayItem, i) =>
-                    i === index
-                      ? {
-                          ...trayItem,
-                          color: newColor,
-                        }
-                      : trayItem
-                  )
-                );
-              }
-            }}
-            className="w-16 h-16 border border-gray-400 rounded-md overflow-hidden shadow flex items-center justify-center"
+      <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-3 rounded-lg shadow-lg">
+        {/* Left Section: Color Picker + Shapes */}
+        <div className="relative flex items-center gap-4 overflow-x-visible">
+          {/* Color Wheel Button */}
+          <button
+            onClick={() => setShowPalette((prev) => !prev)}
+            className="flex flex-col items-center gap-1"
           >
-            {item.type === "image" ? (
-              <img
-                src={item.content}
-                alt="tray item"
-                className="w-full h-full object-cover"
-              />
-            ) : item.type === "shape" ? (
-              <div
-                className={`w-10 h-10 transition-all duration-500 ease-in-out ${
-                  item.shape === "circle" ? "rounded-full" : ""
-                }`}
-                style={{ backgroundColor: item.color }}
-              />
-            ) : null}
-          </div>
-        ))}
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
+            <span className="text-xs text-gray-300">Change color</span>
+          </button>
 
-        {/* Upload button */}
-        <div className="w-16 h-16 border border-gray-400 rounded-md flex items-center justify-center shadow relative">
-          <span className="text-xl text-black">+</span>
+          {/* Color Palette */}
+          {showPalette && (
+            <div className="absolute z-1000 bottom-12 left-0 bg-black text-white rounded-xl p-4 shadow-lg border border-gray-600">
+              {/* Cross mark at top right */}
+              <button
+                className="absolute top-1 right-1 p-1 rounded hover:bg-gray-700 transition"
+                onClick={() => setShowPalette(false)}
+                aria-label="Close color palette"
+                tabIndex={0}
+              >
+                <XMarkIcon className="w-4 h-4 text-gray-300" />
+              </button>
+              <h3 className="text-center text-lg font-medium mb-3">
+                Choose a color
+              </h3>
+              <div className="grid grid-cols-5 gap-2">
+                {colors.map((color, idx) => (
+                  <div
+                    key={idx}
+                    className="w-8 h-8 rounded-md cursor-pointer border border-gray-500"
+                    style={{ backgroundColor: color }}
+                    onClick={() => {
+                      setTrayItems((prev) =>
+                        prev.map((item) =>
+                          item.type === "shape" ? { ...item, color } : item
+                        )
+                      );
+                      setShowPalette(false);
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Shapes */}
+
+          {trayItems.map((item, index) => (
+            <div
+              key={item.id}
+              draggable
+              onDragStart={(e) =>
+                e.dataTransfer.setData(
+                  "item",
+                  JSON.stringify({
+                    type: item.type,
+                    content: item.content,
+                    shape: item.shape,
+                    color: item.color,
+                  })
+                )
+              }
+              onClick={() => {
+                if (item.type === "shape") {
+                  const newColor =
+                    colors[Math.floor(Math.random() * colors.length)];
+
+                  setTrayItems((prev) =>
+                    prev.map((trayItem, i) =>
+                      i === index ? { ...trayItem, color: newColor } : trayItem
+                    )
+                  );
+                }
+              }}
+              className="w-12 h-12 overflow-hidden flex items-center justify-center cursor-pointer"
+            >
+              {item.type === "shape" ? (
+                <div className="w-full h-full flex items-center justify-center">
+                  <ShapeRenderer
+                    shape={item.shape}
+                    color={item.color}
+                    width={40} // match your w-12 (~48px) or w-10 size
+                    height={40}
+                  />
+                </div>
+              ) : item.type === "image" ? (
+                <img
+                  src={item.content}
+                  alt="tray item"
+                  className="w-full h-full object-cover"
+                />
+              ) : null}
+            </div>
+          ))}
+        </div>
+
+        {/* Divider */}
+        <div className="w-px h-12 bg-gray-600" />
+
+        {/* Upload Image Section */}
+        <label className="flex items-center justify-center w-48 h-12 border-2 border-dashed border-gray-500 rounded-lg text-gray-400 text-sm cursor-pointer hover:border-gray-300 transition-colors">
+          Upload Image <span className="ml-1 text-lg">+</span>
           <input
             type="file"
             accept="image/*"
-            className="absolute inset-0 opacity-0 cursor-pointer"
+            className="hidden"
             onChange={(e) => {
               const file = e.target.files?.[0];
               if (file) {
                 const reader = new FileReader();
                 reader.onload = () => {
-                  setTrayItems((prev) => [
+                  +setCanvasItems((prev) => [
                     ...prev,
                     {
                       id: nanoid(),
                       type: "image",
                       content: reader.result,
+                      x: 80 + prev.length * 20,
+                      y: 80 + prev.length * 20,
+                      width: 150, // default width
+                      height: 150, // default height
+                      zIndex: prev.length + 1,
                     },
                   ]);
                 };
@@ -323,7 +414,7 @@ export default function CanvasEditor() {
               }
             }}
           />
-        </div>
+        </label>
       </div>
     </div>
   );

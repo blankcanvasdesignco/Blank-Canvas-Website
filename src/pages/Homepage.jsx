@@ -61,6 +61,7 @@ const tiles = [
 
 const Homepage = () => {
   const canvasRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -74,12 +75,67 @@ const Homepage = () => {
   }, [location.state]);
 
   useEffect(() => {
+    const particleIntervals = {};
+
+    const createParticle = (tileEl, emoji) => {
+      const rect = tileEl.getBoundingClientRect();
+      const particle = document.createElement("span");
+      particle.textContent = emoji;
+      particle.style.position = "fixed";
+      particle.style.left = `${rect.left + rect.width / 2}px`;
+      particle.style.top = `${rect.top + rect.height / 2}px`;
+      particle.style.fontSize = "14px";
+      particle.style.pointerEvents = "none";
+      particle.style.opacity = "1";
+      particle.style.transform = `translate(-50%, -50%) scale(1)`;
+      document.body.appendChild(particle);
+
+      const dx = (Math.random() - 0.5) * 100;
+      const dy = (Math.random() - 0.5) * 100;
+      const rotate = Math.random() * 360;
+
+      particle.animate(
+        [
+          {
+            transform: `translate(-50%, -50%) rotate(0deg) scale(1)`,
+            opacity: 1,
+          },
+          {
+            transform: `translate(${dx}px, ${dy}px) rotate(${rotate}deg) scale(0.5)`,
+            opacity: 0,
+          },
+        ],
+        { duration: 800, easing: "ease-out" }
+      ).onfinish = () => {
+        particle.remove();
+      };
+    };
+
     for (let i = 0; i < tiles.length; i++) {
+      const tileEl = document.querySelector(`.portfolio-${i}`);
+      const emoji = `✨${i + 1}`; // unique per tile
+
       createDraggable(`.portfolio-${i}`, {
         container: "#portfolio_container",
+        onGrab: () => {
+          particleIntervals[i] = setInterval(() => {
+            createParticle(tileEl, emoji);
+          }, 100);
+        },
+        onRelease: () => {
+          clearInterval(particleIntervals[i]);
+        },
+        onMove: () => {
+          // keep scattering while moving
+          createParticle(tileEl, emoji);
+        },
       });
     }
-  }, []);
+
+    return () => {
+      Object.values(particleIntervals).forEach(clearInterval);
+    };
+  }, [tiles]);
 
   const handleNavigate = (link) => {
     window.location.href = link;
@@ -90,7 +146,7 @@ const Homepage = () => {
       <DotTracker />
       {/* Hero Section */}
       <section
-        data-dot-color="black"
+        data-dot-shape="square"
         className="bg-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
       >
         <div className="relative flex flex-col items-center gap-3 p-10">
@@ -98,14 +154,17 @@ const Homepage = () => {
           <h3>building at the interesection of art, design and technology</h3>
         </div>
 
-        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
+        <button
+          onClick={() => navigate("/contact")}
+          className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
           Connect
         </button>
       </section>
 
       {/* Portfolio */}
       <section
-        data-dot-color="white"
+        data-dot-shape="circle"
         id="portfolio"
         className="pt-2 font-unbounded"
       >
@@ -146,7 +205,7 @@ const Homepage = () => {
 
       {/* Services */}
       <section
-        data-dot-color="white"
+        data-dot-shape="square"
         id="services"
         className="bg-black text-white py-12 px-4 flex flex-col justify-center items-center space-y-20 font-unbounded"
       >
@@ -187,20 +246,23 @@ const Homepage = () => {
 
         {/* Button */}
 
-        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
+        <button
+          onClick={() => navigate("/services")}
+          className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
           Learn More
         </button>
       </section>
 
       <section
-        data-dot-color="black"
+        data-dot-shape="circle"
         className="bg-black text-white p-12 font-unbounded"
       >
         <CanvasEditor />
       </section>
 
       <section
-        data-dot-color="white"
+        data-dot-shape="square"
         className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
       >
         <div className="relative flex flex-col items-center gap-3 p-10">
@@ -209,7 +271,10 @@ const Homepage = () => {
           <h1 className="text-4xl font-bethellen">Blank Canvas</h1>
         </div>
 
-        <button className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]">
+        <button
+          onClick={() => navigate("/contact")}
+          className="cursor-pointer text-sm text-gray-500 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
           Let's work together
         </button>
       </section>
