@@ -31,24 +31,24 @@ import DotTracker from "../components/DotTracker";
 const tiles = [
   {
     icon: icon1,
-    name: "PANOSLICE",
-    desc: "Instagram collages",
+    name: "panoslice",
+    desc: "instagram collages",
     rating: "⭐️4.7 (2,000)",
     cta: "download",
     link: "https://apps.apple.com/us/app/panoslice-carousel-splitter/id1592547810",
   },
   {
     icon: icon2,
-    name: "LEK",
-    desc: "Linkedin Growth Tool",
+    name: "lek",
+    desc: "linkedin growth tool",
     rating: "⭐️4.6 (100)",
     cta: "download",
     link: "https://apps.apple.com/us/app/grow-your-linkedin-lek-ai/id6702005680",
   },
   {
     icon: icon3,
-    name: "Rene",
-    desc: "Make cute collages",
+    name: "rene",
+    desc: "make cute collages",
     rating: "⭐️4.8 (50)",
     cta: "download",
     link: "https://apps.apple.com/us/app/rene-collage-vhs-ai-maker/id6744745951",
@@ -56,38 +56,38 @@ const tiles = [
   {
     icon: icon4,
     name: "cr8r.ai",
-    desc: "AI Image Generation",
+    desc: "AI image generation",
     rating: "",
     cta: "create",
     link: "https://cr8r.ai", // assuming web link
   },
   {
     icon: icon5,
-    name: "Lono",
-    desc: "Viral Reel Templates",
+    name: "lono",
+    desc: "viral reel templates",
     rating: "⭐️4.8 (500)",
     cta: "download",
     link: "https://apps.apple.com/us/app/lono-reels-templates-maker/id1632742723",
   },
   {
     icon: icon6,
-    name: "Tawk2",
-    desc: "Relationship building",
+    name: "tawk2",
+    desc: "relationship building",
     rating: "⭐️4.8 (10)",
     cta: "download",
     link: "https://apps.apple.com/us/app/tawk2-conversation-starters/id6738306118",
   },
   {
     icon: icon7,
-    name: "Plugged",
-    desc: "Find mood twins",
+    name: "plugged",
+    desc: "find mood twins",
     rating: "⭐️5 (10)",
     cta: "download",
     link: "https://apps.apple.com/us/app/plugged-find-mood-twins/id6469296074",
   },
   {
     icon: icon8,
-    name: "Swipekit",
+    name: "swipekit",
     desc: "AI UGC slideshows",
     rating: "⭐️5 (10)",
     cta: "download",
@@ -95,23 +95,23 @@ const tiles = [
   },
   {
     icon: icon9,
-    name: "Mural",
-    desc: "Instagram Grid & Carousel",
+    name: "mural",
+    desc: "instagram grid & carousel",
     rating: "⭐️4.7 (100)",
     cta: "download",
     link: "https://apps.apple.com/us/app/mural-carousel-grid-maker/id6736945077",
   },
   {
     icon: icon10,
-    name: "Found",
-    desc: "Social grid app",
+    name: "found",
+    desc: "social grid app",
     rating: "⭐️4.7 (10)",
     cta: "download",
     link: "https://apps.apple.com/us/app/found-social-grid-app/id6746697939",
   },
   {
     icon: icon11,
-    name: "Parent101",
+    name: "parent101",
     desc: "AI copilot for parents",
     rating: "⭐️4.7 (10)",
     cta: "download",
@@ -122,6 +122,7 @@ const tiles = [
 const Homepage = () => {
   const canvasRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -129,7 +130,12 @@ const Homepage = () => {
       if (el) {
         setTimeout(() => {
           el.scrollIntoView({ behavior: "smooth" });
-        }, 500); // small delay ensures DOM is ready
+          window.history.replaceState(
+            { ...location.state, scrollTo: undefined },
+            "",
+            window.location.pathname + window.location.search
+          );
+        }, 500);
       }
     }
   }, [location.state]);
@@ -231,7 +237,7 @@ const Homepage = () => {
         <div className="bg-black text-white">
           <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
             <h2 className="text-center text-4xl">Things we've shipped</h2>
-            <p className="text-gray-400">drag, discover and download</p>
+            <p className="opacity-60">drag, discover and download</p>
           </div>
           <div
             id="portfolio_container"
@@ -250,11 +256,9 @@ const Homepage = () => {
                       alt={`Portfolio icon ${i + 1}`}
                     />
                   </div>
-                  <div className="absolute opacity-[0.9] border border-[#6b7280] border-dashed rounded-md inset-0 flex flex-col items-center justify-center text-center p-4 space-y-1 pointer-events-none">
+                  <div className="absolute border border-[#6b7280] border-dashed rounded-md inset-0 flex flex-col items-center justify-center text-center p-4 space-y-1 pointer-events-none">
                     {/* App Name */}
-                    <p className="text-[10px] sm:text-xs font-semibold">
-                      {item.name}
-                    </p>
+                    <p className="text-[12px] sm:text-[14px]">{item.name}</p>
 
                     {/* Description */}
                     <p className="text-[8px] sm:text-[10px]">{item.desc}</p>
@@ -270,7 +274,7 @@ const Homepage = () => {
                         window.open(item.link, "_blank", "noopener,noreferrer")
                       }
                       rel="noopener noreferrer"
-                      className="cursor-pointer text-[8px] sm:text-[10px] underline pointer-events-auto"
+                      className="cursor-pointer text-[10px] sm:text-[12px] opacity-[0.6] underline pointer-events-auto"
                     >
                       ↪ {item.cta}
                     </p>
@@ -337,6 +341,12 @@ const Homepage = () => {
         data-dot-shape="circle"
         className="bg-black text-white p-12 font-unbounded"
       >
+        <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
+          <h2 className="text-center text-4xl">Make Your Mark</h2>
+          <p className="opacity-60">
+            start with nothing. end with something only you could make.
+          </p>
+        </div>
         <CanvasEditor />
       </section>
 

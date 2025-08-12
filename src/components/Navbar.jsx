@@ -9,9 +9,12 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleScrollNavigation = (targetId) => {
-    setIsOpen(false); // Close menu when navigating
+    setIsOpen(false);
     if (location.pathname === "/") {
-      document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       navigate("/", { state: { scrollTo: targetId } });
     }

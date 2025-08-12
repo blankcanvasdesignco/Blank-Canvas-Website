@@ -235,7 +235,21 @@ export default function CanvasEditor() {
         ref={canvasRef}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className="relative w-full h-[500px] border border-[#D1D5DB] bg-white rounded-md shadow-md overflow-hidden"
+        className="
+          relative
+          mx-auto
+          w-full
+          max-w-[90vw]
+          sm:max-w-[400px]
+          md:max-w-[500px]
+          lg:max-w-[600px]
+          aspect-square
+          border border-[#D1D5DB]
+          bg-white
+          rounded-md
+          shadow-md
+          overflow-hidden
+        "
       >
         {canvasItems.map((item) => (
           <div
