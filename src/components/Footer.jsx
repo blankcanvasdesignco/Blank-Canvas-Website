@@ -12,7 +12,7 @@ const Footer = () => {
           onClick={() => navigate("/")}
           className="cursor-pointer text-sm font-bethellen"
         >
-          Blank Canvas & Design Co.
+          Blank Canvas Design Co.
         </div>
 
         {/* Right */}

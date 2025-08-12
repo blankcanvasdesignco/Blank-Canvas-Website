@@ -23,7 +23,7 @@ const Navbar = () => {
       <nav className="bg-white flex justify-between items-center py-6 px-6 md:px-12 text-sm font-unbounded z-30 shadow-md top-0 left-0 right-0">
         <div className="font-bethellen text-sm sm:text-lg">
           <Link to="/" onClick={() => setIsOpen(false)}>
-            Blank Canvas & Design Co.
+            Blank Canvas Design Co.
           </Link>
         </div>
 

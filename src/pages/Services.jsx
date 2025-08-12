@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { animate, stagger } from "animejs";
 import lek_icon from "../assets/icons/lek_icon.png";
 import { useNavigate } from "react-router-dom";
@@ -71,20 +71,44 @@ const cardData = [
 const Services = () => {
   const [expanded, setExpanded] = useState({});
   const navigate = useNavigate();
+  const stacksRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false); // to ensure it runs once
 
-  const handleClick = (index) => {
-    const isExpanded = expanded[index];
-
+  const handleExpand = (index, expand = true) => {
     animate(`.card-${index} .inner-card`, {
-      translateX: (el, i) => (isExpanded ? 0 : i * 200),
-      rotate: (el, i) => (isExpanded ? -8 + i * 8 : 0),
+      translateY: (el, i) => (expand ? i * 200 : 0), // vertical spread
+      rotate: (el, i) => (expand ? 0 : -4 + i * 4),
       duration: 600,
       easing: "easeOutExpo",
-      delay: stagger(100, { direction: isExpanded ? "reverse" : "normal" }),
+      delay: stagger(100, { direction: expand ? "normal" : "reverse" }),
     });
 
-    setExpanded((prev) => ({ ...prev, [index]: !isExpanded }));
+    setExpanded((prev) => ({ ...prev, [index]: expand }));
   };
+
+  // Trigger animation when stacks come into view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !hasAnimated) {
+          cardData.forEach((_, index) => {
+            setTimeout(() => handleExpand(index, true), index * 500);
+          });
+          setHasAnimated(true);
+        }
+      },
+      { threshold: 0.3 } // 30% visible
+    );
+
+    if (stacksRef.current) {
+      observer.observe(stacksRef.current);
+    }
+
+    return () => {
+      if (stacksRef.current) observer.unobserve(stacksRef.current);
+    };
+  }, [hasAnimated]);
 
   return (
     <div className="bg-black text-white py-16 text-center px-4 font-unbounded">
@@ -94,12 +118,18 @@ const Services = () => {
         Like it's a song. It has to move you.
       </p>
 
-      <div className="relative overflow-x-auto flex overflow-y-clip flex-col gap-16 p-4 py-8">
+      {/* Centered row of stacks */}
+      <div
+        ref={stacksRef}
+        className="flex flex-row justify-center gap-16 p-4 pt-8 pb-12 transition-[height] duration-700"
+        style={{
+          height: Object.values(expanded).some(Boolean) ? "800px" : "220px",
+        }}
+      >
         {cardData.map((card, index) => (
           <div
             key={card.id}
             className={`card-${index} relative w-36 h-36 cursor-pointer`}
-            onClick={() => handleClick(index)}
           >
             {[0, 1, 2, 3].map((i) => (
               <div
@@ -109,14 +139,14 @@ const Services = () => {
                   zIndex: 5 - i,
                   transform: `rotate(${
                     i === 0
-                      ? "-16deg"
-                      : i === 1
                       ? "-8deg"
+                      : i === 1
+                      ? "-4deg"
                       : i === 2
                       ? "0deg"
                       : i === 3
-                      ? "8deg"
-                      : "16deg"
+                      ? "4deg"
+                      : "8deg"
                   })`,
                 }}
               >
@@ -134,14 +164,10 @@ const Services = () => {
             ))}
           </div>
         ))}
-
-        <div className="absolute top-[45%] right-20">
-          <h2 className="text-3xl font-bethellen">Blank Canvs & Design Co.</h2>
-        </div>
       </div>
 
       <div className="mt-16">
-        <h2 className="text-xl ">From Zero to Launch</h2>
+        <h2 className="text-xl">From Zero to Launch</h2>
       </div>
       <div className="mt-8">
         <h2 className="text-sm">
@@ -151,7 +177,7 @@ const Services = () => {
       </div>
       <button
         onClick={() => navigate("/contact")}
-        className="cursor-pointer mt-8 text-sm text-gray-900 px-12 py-2 rounded-full border-2 bg-white hover:bg-gray-100 transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        className="px-12 py-2 mt-8 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110"
       >
         Get in touch
       </button>
