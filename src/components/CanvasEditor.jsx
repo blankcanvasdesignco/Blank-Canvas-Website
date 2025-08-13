@@ -329,7 +329,7 @@ export default function CanvasEditor() {
               className="flex flex-col items-center gap-1"
             >
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
-              <span className="cursor-pointer text-xs text-[#707070] hover:text-gray-300 transition-colors duration-300">
+              <span className="cursor-pointer text-[10px] lg:text-xs text-[#707070] hover:text-gray-300 transition-colors duration-300">
                 Change color
               </span>
             </button>
@@ -430,7 +430,7 @@ export default function CanvasEditor() {
           {/* Upload Image Section */}
           <label
             className="
-            flex items-center justify-center w-48 h-12 border-2 border-dashed border-[#707070] rounded-lg text-[#707070] text-xs cursor-pointer hover:border-gray-300 hover:text-gray-300 transition-colors
+            flex items-center justify-center w-48 h-12 border-2 border-dashed border-[#707070] rounded-lg text-[#707070] text-[10px] lg:text-xs cursor-pointer hover:border-gray-300 hover:text-gray-300 transition-colors
             md:w-36 md:h-10
           "
           >
