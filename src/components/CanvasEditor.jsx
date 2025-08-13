@@ -215,8 +215,38 @@ export default function CanvasEditor() {
 
   return (
     <div className="space-y-4 p-4">
-      {/* Canvas */}
+      <div
+        className="
+          flex items-center justify-between
+          mx-auto
+          w-full
+          max-w-[90vw]
+          sm:max-w-[400px]
+          md:max-w-[500px]
+          lg:max-w-[600px]
+        "
+      >
+        <div className="relative group flex items-center">
+          <ArrowPathIcon
+            className="bottom-4 left-4 h-6 w-6 text-white cursor-pointer"
+            onClick={() => {
+              setCanvasItems((prev) => prev.slice(0, -1)); // removes last item
+            }}
+          />
+          <span className="absolute left-full ml-2 bottom-1/2 translate-y-1/2 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap shadow-lg z-10">
+            remove last figure
+          </span>
+        </div>
+        <button
+          onClick={downloadCanvas}
+          className="bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer text-xs text-white px-4 py-2 rounded-full border-2 bg-black transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
+          Save Canvas
+          <ArrowDownOnSquareIcon className="w-4 h-4" />
+        </button>
+      </div>
 
+      {/* Canvas */}
       <div
         ref={canvasRef}
         onDrop={handleDrop}
@@ -255,7 +285,7 @@ export default function CanvasEditor() {
               <img
                 src={item.content}
                 alt="canvas item"
-                className="w-full h-full object-cover rounded"
+                className="w-full h-full object-fill rounded"
                 draggable={false}
                 crossOrigin="anonymous"
               />
@@ -276,32 +306,6 @@ export default function CanvasEditor() {
             />
           </div>
         ))}
-      </div>
-
-      <div
-        className="
-          flex items-center justify-between
-          mx-auto
-          w-full
-          max-w-[90vw]
-          sm:max-w-[400px]
-          md:max-w-[500px]
-          lg:max-w-[600px]
-        "
-      >
-        <ArrowPathIcon
-          className="bottom-4 left-4 h-6 w-6 text-white cursor-pointer"
-          onClick={() => {
-            setCanvasItems((prev) => prev.slice(0, -1)); // removes last item
-          }}
-        />
-        <button
-          onClick={downloadCanvas}
-          className="bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer text-xs text-white px-4 py-2 rounded-full border-2 bg-black transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
-        >
-          Save Canvas
-          <ArrowDownOnSquareIcon className="w-4 h-4" />
-        </button>
       </div>
 
       {/* Tray */}
@@ -325,7 +329,9 @@ export default function CanvasEditor() {
               className="flex flex-col items-center gap-1"
             >
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
-              <span className="text-xs text-gray-300">Change color</span>
+              <span className="cursor-pointer text-xs text-[#707070] hover:text-gray-300 transition-colors duration-300">
+                Change color
+              </span>
             </button>
 
             {/* Color Palette */}
@@ -424,7 +430,7 @@ export default function CanvasEditor() {
           {/* Upload Image Section */}
           <label
             className="
-            flex items-center justify-center w-48 h-12 border-2 border-dashed border-gray-500 rounded-lg text-gray-400 text-sm cursor-pointer hover:border-gray-300 transition-colors
+            flex items-center justify-center w-48 h-12 border-2 border-dashed border-[#707070] rounded-lg text-[#707070] text-xs cursor-pointer hover:border-gray-300 hover:text-gray-300 transition-colors
             md:w-36 md:h-10
           "
           >

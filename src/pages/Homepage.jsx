@@ -59,7 +59,7 @@ const tiles = [
     desc: "AI image generation",
     rating: "",
     cta: "create",
-    link: "https://cr8r.ai", // assuming web link
+    link: "https://cr8r.ai",
   },
   {
     icon: icon5,
@@ -83,7 +83,7 @@ const tiles = [
     desc: "find mood twins",
     rating: "⭐️5 (10)",
     cta: "download",
-    link: "https://apps.apple.com/us/app/plugged-find-mood-twins/id6469296074",
+    link: "https://apps.apple.com/us/app/plugged-find-friends-by-mood/id6746377914",
   },
   {
     icon: icon8,
@@ -99,7 +99,7 @@ const tiles = [
     desc: "instagram grid & carousel",
     rating: "⭐️4.7 (100)",
     cta: "download",
-    link: "https://apps.apple.com/us/app/mural-carousel-grid-maker/id6736945077",
+    link: "https://play.google.com/store/apps/details?id=com.muralgridforinstagram.squarecrop&hl=en_IN",
   },
   {
     icon: icon10,
@@ -107,7 +107,7 @@ const tiles = [
     desc: "social grid app",
     rating: "⭐️4.7 (10)",
     cta: "download",
-    link: "https://apps.apple.com/us/app/found-social-grid-app/id6746697939",
+    link: "https://apps.apple.com/us/app/found-social-photo-grid/id6743046660",
   },
   {
     icon: icon11,
@@ -215,9 +215,14 @@ const Homepage = () => {
         data-dot-shape="square"
         className="bg-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
       >
-        <div className="relative flex flex-col items-center gap-3 p-10">
-          <h1 className="text-4xl">Creating for Creators</h1>
-          <h3>building at the interesection of art, design and technology</h3>
+        <div className="relative flex flex-col items-center gap-3 p-10 max-w-[95%] sm:max-w-[80%] lg:max-w-[50%]">
+          <h1 className="text-4xl">
+            Building tools that help you create every day
+          </h1>
+          <h3>
+            we're a mobile development studio building at the intersection of
+            art, design and technology
+          </h3>
         </div>
 
         <button
@@ -232,12 +237,12 @@ const Homepage = () => {
       <section
         data-dot-shape="circle"
         id="portfolio"
-        className="pt-2 font-unbounded"
+        className="font-unbounded"
       >
         <div className="bg-black text-white">
           <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
             <h2 className="text-center text-4xl">Things we've shipped</h2>
-            <p className="opacity-60">drag, discover and download</p>
+            <p className="opacity-60">drag, discover and download.</p>
           </div>
           <div
             id="portfolio_container"
@@ -295,7 +300,7 @@ const Homepage = () => {
         <div className="flex flex-col items-center pt-10 space-y-3">
           <h2 className="text-center text-4xl">Services</h2>
           <p className="opacity-60">
-            start with nothing. end with something only you could make.
+            we design, build, and launch products people love to use.
           </p>
         </div>
 
@@ -342,6 +347,7 @@ const Homepage = () => {
         </button>
       </section>
 
+      {/* Canvas */}
       <section
         data-dot-shape="circle"
         className="hidden md:block bg-black text-white p-12 font-unbounded"
@@ -355,6 +361,7 @@ const Homepage = () => {
         <CanvasEditor />
       </section>
 
+      {/* Bottom text */}
       <section
         data-dot-shape="square"
         className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
