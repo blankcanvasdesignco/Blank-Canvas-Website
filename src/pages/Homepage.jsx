@@ -290,9 +290,14 @@ const Homepage = () => {
       <section
         data-dot-shape="square"
         id="services"
-        className="bg-black text-white py-12 px-4 flex flex-col justify-center items-center space-y-20 font-unbounded"
+        className="bg-black text-white pt-12 px-4 flex flex-col justify-center items-center space-y-16 font-unbounded"
       >
-        <h2 className="text-center text-4xl">Services</h2>
+        <div className="flex flex-col items-center pt-10 space-y-3">
+          <h2 className="text-center text-4xl">Services</h2>
+          <p className="opacity-60">
+            start with nothing. end with something only you could make.
+          </p>
+        </div>
 
         <div className="flex flex-col lg:flex-row lg:justify-around mx-8 lg:mx-32 lg:space-x-24 space-y-14 lg:space-y-0 text-center">
           {/* Design */}
@@ -339,9 +344,9 @@ const Homepage = () => {
 
       <section
         data-dot-shape="circle"
-        className="bg-black text-white p-12 font-unbounded"
+        className="hidden md:block bg-black text-white p-12 font-unbounded"
       >
-        <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
+        <div className="flex flex-col items-center pt-10 pb-5 space-y-3">
           <h2 className="text-center text-4xl">Make Your Mark</h2>
           <p className="opacity-60">
             start with nothing. end with something only you could make.

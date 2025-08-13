@@ -216,21 +216,7 @@ export default function CanvasEditor() {
   return (
     <div className="space-y-4 p-4">
       {/* Canvas */}
-      <div className="flex items-center justify-between">
-        <ArrowPathIcon
-          className="bottom-4 left-4 h-6 w-6 text-white cursor-pointer"
-          onClick={() => {
-            setCanvasItems((prev) => prev.slice(0, -1)); // removes last item
-          }}
-        />
-        <button
-          onClick={downloadCanvas}
-          className="bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer text-xs text-white px-4 py-2 rounded-full border-2 bg-black transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
-        >
-          Save Canvas
-          <ArrowDownOnSquareIcon className="w-4 h-4" />
-        </button>
-      </div>
+
       <div
         ref={canvasRef}
         onDrop={handleDrop}
@@ -292,139 +278,186 @@ export default function CanvasEditor() {
         ))}
       </div>
 
+      <div
+        className="
+          flex items-center justify-between
+          mx-auto
+          w-full
+          max-w-[90vw]
+          sm:max-w-[400px]
+          md:max-w-[500px]
+          lg:max-w-[600px]
+        "
+      >
+        <ArrowPathIcon
+          className="bottom-4 left-4 h-6 w-6 text-white cursor-pointer"
+          onClick={() => {
+            setCanvasItems((prev) => prev.slice(0, -1)); // removes last item
+          }}
+        />
+        <button
+          onClick={downloadCanvas}
+          className="bottom-4 right-4 flex items-center justify-center gap-1 cursor-pointer text-xs text-white px-4 py-2 rounded-full border-2 bg-black transition-transform duration-200 hover:scale-110 backdrop-blur-sm border-[rgba(107,114,128,0.4)] shadow-[0_0_8px_2px_rgba(107,114,128,0.2)]"
+        >
+          Save Canvas
+          <ArrowDownOnSquareIcon className="w-4 h-4" />
+        </button>
+      </div>
+
       {/* Tray */}
-      <div className="flex items-center justify-between bg-[#1E1E1E] px-4 py-3 rounded-lg shadow-lg">
-        {/* Left Section: Color Picker + Shapes */}
-        <div className="relative flex items-center gap-4 overflow-x-visible">
-          {/* Color Wheel Button */}
-          <button
-            onClick={() => setShowPalette((prev) => !prev)}
-            className="flex flex-col items-center gap-1"
-          >
-            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
-            <span className="text-xs text-gray-300">Change color</span>
-          </button>
+      <div
+        className="
+          flex flex-col items-center justify-center  px-4 py-3 bg-[#1E1E1E] rounded-lg shadow-lg
+          mx-auto
+          w-full
+          max-w-[90vw]
+          sm:max-w-[400px]
+          md:max-w-[500px]
+          lg:max-w-[600px]
+        "
+      >
+        <div className="flex flex-col items-center justify-around w-full md:flex-row ">
+          {/* Left Section: Color Picker + Shapes */}
+          <div className="relative flex items-center gap-4 overflow-x-visible md:flex-wrap md:justify-center">
+            {/* Color Wheel Button */}
+            <button
+              onClick={() => setShowPalette((prev) => !prev)}
+              className="flex flex-col items-center gap-1"
+            >
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
+              <span className="text-xs text-gray-300">Change color</span>
+            </button>
 
-          {/* Color Palette */}
-          {showPalette && (
-            <div className="absolute z-1000 bottom-12 left-0 bg-black text-white rounded-xl p-4 shadow-lg border border-gray-600">
-              {/* Cross mark at top right */}
-              <button
-                className="absolute top-1 right-1 p-1 rounded hover:bg-gray-700 transition"
-                onClick={() => setShowPalette(false)}
-                aria-label="Close color palette"
-                tabIndex={0}
-              >
-                <XMarkIcon className="w-4 h-4 text-gray-300" />
-              </button>
-              <h3 className="text-center text-lg font-medium mb-3">
-                Choose a color
-              </h3>
-              <div className="grid grid-cols-5 gap-2">
-                {colors.map((color, idx) => (
-                  <div
-                    key={idx}
-                    className="w-8 h-8 rounded-md cursor-pointer border border-gray-500"
-                    style={{ backgroundColor: color }}
-                    onClick={() => {
-                      setTrayItems((prev) =>
-                        prev.map((item) =>
-                          item.type === "shape" ? { ...item, color } : item
-                        )
-                      );
-                      setShowPalette(false);
-                    }}
-                  />
-                ))}
+            {/* Color Palette */}
+            {showPalette && (
+              <div className="absolute z-1000 bottom-12 left-0 bg-black text-white rounded-xl p-4 shadow-lg border border-gray-600">
+                {/* Cross mark at top right */}
+                <button
+                  className="absolute top-1 right-1 p-1 rounded hover:bg-gray-700 transition"
+                  onClick={() => setShowPalette(false)}
+                  aria-label="Close color palette"
+                  tabIndex={0}
+                >
+                  <XMarkIcon className="w-4 h-4 text-gray-300" />
+                </button>
+                <h3 className="text-center text-lg font-medium mb-3">
+                  Choose a color
+                </h3>
+                <div className="grid grid-cols-5 gap-2">
+                  {colors.map((color, idx) => (
+                    <div
+                      key={idx}
+                      className="w-8 h-8 rounded-md cursor-pointer border border-gray-500"
+                      style={{ backgroundColor: color }}
+                      onClick={() => {
+                        setTrayItems((prev) =>
+                          prev.map((item) =>
+                            item.type === "shape" ? { ...item, color } : item
+                          )
+                        );
+                        setShowPalette(false);
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Shapes */}
+            {/* Shapes */}
+            {trayItems.map((item, index) => (
+              <div
+                key={item.id}
+                draggable
+                onDragStart={(e) =>
+                  e.dataTransfer.setData(
+                    "item",
+                    JSON.stringify({
+                      type: item.type,
+                      content: item.content,
+                      shape: item.shape,
+                      color: item.color,
+                    })
+                  )
+                }
+                onClick={() => {
+                  if (item.type === "shape") {
+                    const newColor =
+                      colors[Math.floor(Math.random() * colors.length)];
 
-          {trayItems.map((item, index) => (
-            <div
-              key={item.id}
-              draggable
-              onDragStart={(e) =>
-                e.dataTransfer.setData(
-                  "item",
-                  JSON.stringify({
-                    type: item.type,
-                    content: item.content,
-                    shape: item.shape,
-                    color: item.color,
-                  })
-                )
-              }
-              onClick={() => {
-                if (item.type === "shape") {
-                  const newColor =
-                    colors[Math.floor(Math.random() * colors.length)];
+                    setTrayItems((prev) =>
+                      prev.map((trayItem, i) =>
+                        i === index
+                          ? { ...trayItem, color: newColor }
+                          : trayItem
+                      )
+                    );
+                  }
+                }}
+                className="
+                  w-12 h-12 overflow-hidden flex items-center justify-center cursor-pointer
+                  md:w-10 md:h-10
+                "
+              >
+                {item.type === "shape" ? (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ShapeRenderer
+                      shape={item.shape}
+                      color={item.color}
+                      width={40} // default for large
+                      height={40}
+                    />
+                  </div>
+                ) : item.type === "image" ? (
+                  <img
+                    src={item.content}
+                    alt="tray item"
+                    className="w-full h-full object-cover"
+                  />
+                ) : null}
+              </div>
+            ))}
+          </div>
 
-                  setTrayItems((prev) =>
-                    prev.map((trayItem, i) =>
-                      i === index ? { ...trayItem, color: newColor } : trayItem
-                    )
-                  );
+          {/* Divider */}
+          <div className="w-px h-12 bg-gray-600 md:h-20" />
+
+          {/* Upload Image Section */}
+          <label
+            className="
+            flex items-center justify-center w-48 h-12 border-2 border-dashed border-gray-500 rounded-lg text-gray-400 text-sm cursor-pointer hover:border-gray-300 transition-colors
+            md:w-36 md:h-10
+          "
+          >
+            Upload Image <span className="ml-1 text-lg">+</span>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  const reader = new FileReader();
+                  reader.onload = () => {
+                    +setCanvasItems((prev) => [
+                      ...prev,
+                      {
+                        id: nanoid(),
+                        type: "image",
+                        content: reader.result,
+                        x: 80 + prev.length * 20,
+                        y: 80 + prev.length * 20,
+                        width: 150, // default width
+                        height: 150, // default height
+                        zIndex: prev.length + 1,
+                      },
+                    ]);
+                  };
+                  reader.readAsDataURL(file);
                 }
               }}
-              className="w-12 h-12 overflow-hidden flex items-center justify-center cursor-pointer"
-            >
-              {item.type === "shape" ? (
-                <div className="w-full h-full flex items-center justify-center">
-                  <ShapeRenderer
-                    shape={item.shape}
-                    color={item.color}
-                    width={48} // match your w-12 (~48px) or w-10 size
-                    height={48}
-                  />
-                </div>
-              ) : item.type === "image" ? (
-                <img
-                  src={item.content}
-                  alt="tray item"
-                  className="w-full h-full object-cover"
-                />
-              ) : null}
-            </div>
-          ))}
+            />
+          </label>
         </div>
-
-        {/* Divider */}
-        <div className="w-px h-12 bg-gray-600" />
-
-        {/* Upload Image Section */}
-        <label className="flex items-center justify-center w-48 h-12 border-2 border-dashed border-gray-500 rounded-lg text-gray-400 text-sm cursor-pointer hover:border-gray-300 transition-colors">
-          Upload Image <span className="ml-1 text-lg">+</span>
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                  +setCanvasItems((prev) => [
-                    ...prev,
-                    {
-                      id: nanoid(),
-                      type: "image",
-                      content: reader.result,
-                      x: 80 + prev.length * 20,
-                      y: 80 + prev.length * 20,
-                      width: 150, // default width
-                      height: 150, // default height
-                      zIndex: prev.length + 1,
-                    },
-                  ]);
-                };
-                reader.readAsDataURL(file);
-              }
-            }}
-          />
-        </label>
       </div>
     </div>
   );
