@@ -25,18 +25,18 @@ const Contact = () => {
 
         <div className="relative border border-dashed border-white p-6 w-full max-w-xl rounded-lg">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex flex-col md:flex-row justify-between">
+            <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between">
               <input
                 name="name"
                 type="text"
                 placeholder="Your name"
-                className="w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
+                className="w-full md:w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
               />
               <input
                 name="email"
                 type="email"
                 placeholder="Email"
-                className="w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
+                className="w-full md:w-[49%] px-4 py-3 bg-black border border-white rounded-2xl outline-none text-white placeholder-gray-500"
               />
             </div>
             <textarea

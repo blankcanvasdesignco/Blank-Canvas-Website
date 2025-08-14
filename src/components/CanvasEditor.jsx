@@ -311,7 +311,7 @@ export default function CanvasEditor() {
       {/* Tray */}
       <div
         className="
-          flex flex-col items-center justify-center  px-4 py-3 bg-[#1E1E1E] rounded-lg shadow-lg
+          flex flex-col items-center justify-center px-4 py-3 bg-[#1E1E1E] rounded-lg shadow-lg
           mx-auto
           w-full
           max-w-[90vw]
@@ -326,10 +326,10 @@ export default function CanvasEditor() {
             {/* Color Wheel Button */}
             <button
               onClick={() => setShowPalette((prev) => !prev)}
-              className="flex flex-col items-center gap-1"
+              className="cursor-pointer flex flex-col items-center gap-1"
             >
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-500 via-yellow-400 to-green-400 border border-gray-500 shadow-inner" />
-              <span className="cursor-pointer text-[10px] lg:text-xs text-[#707070] hover:text-gray-300 transition-colors duration-300">
+              <span className="text-[10px] lg:text-xs text-[#707070] hover:text-gray-300 transition-colors duration-300">
                 Change color
               </span>
             </button>

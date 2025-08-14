@@ -211,15 +211,12 @@ const Homepage = () => {
     <div className="min-h-screen text-black">
       <DotTracker />
       {/* Hero Section */}
-      <section
-        data-dot-shape="square"
-        className="bg-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
-      >
-        <div className="relative flex flex-col items-center gap-3 p-10 max-w-[95%] sm:max-w-[80%] lg:max-w-[50%]">
-          <h1 className="text-4xl">
+      <section className="bg-white flex flex-col items-center justify-center py-18 text-center space-y-12 font-unbounded">
+        <div className="relative flex flex-col items-center space-y-2 gap-3 max-w-[85%] sm:max-w-[80%] lg:max-w-[50%]">
+          <h1 className="text-3xl sm:text-4xl">
             Building tools that help you create every day
           </h1>
-          <h3>
+          <h3 className="text-sm sm:text-md">
             we're a mobile development studio building at the intersection of
             art, design and technology
           </h3>
@@ -234,15 +231,15 @@ const Homepage = () => {
       </section>
 
       {/* Portfolio */}
-      <section
-        data-dot-shape="circle"
-        id="portfolio"
-        className="font-unbounded"
-      >
+      <section id="portfolio" className="font-unbounded text-center">
         <div className="bg-black text-white">
-          <div className="flex flex-col items-center pt-10 pb-2 space-y-3">
-            <h2 className="text-center text-4xl">Things we've shipped</h2>
-            <p className="opacity-60">drag, discover and download.</p>
+          <div className="flex flex-col items-center pt-10 pb-2 px-4 space-y-3">
+            <h2 className="text-center text-3xl sm:text-4xl">
+              Things we've shipped
+            </h2>
+            <p className="opacity-60 text-sm sm:text-md">
+              drag, discover and download.
+            </p>
           </div>
           <div
             id="portfolio_container"
@@ -293,13 +290,12 @@ const Homepage = () => {
 
       {/* Services */}
       <section
-        data-dot-shape="square"
         id="services"
-        className="bg-black text-white pt-12 px-4 flex flex-col justify-center items-center space-y-16 font-unbounded"
+        className="bg-black text-white flex flex-col justify-center items-center text-center space-y-14 font-unbounded"
       >
-        <div className="flex flex-col items-center pt-10 space-y-3">
-          <h2 className="text-center text-4xl">Services</h2>
-          <p className="opacity-60">
+        <div className="flex flex-col items-center pt-16 space-y-3 px-4">
+          <h2 className="text-center text-3xl sm:text-4xl">Services</h2>
+          <p className="opacity-60 text-sm sm:text-md">
             we design, build, and launch products people love to use.
           </p>
         </div>
@@ -319,7 +315,7 @@ const Homepage = () => {
           <div className="flex flex-1/3 flex-col items-center max-w-120 lg:max-w-60 space-y-4">
             <img className="w-12 h-12" src={dev} alt="" />
             <h3 className="text-xl">Dev</h3>
-            <p className="text-sm leading-relaxed">
+            <p className="text-sm ">
               swift and swiftui is our native tongue. we don’t just prototype,
               we ship. from mvps to app store-ready builds, we write fast,
               reliable, production code.
@@ -352,9 +348,9 @@ const Homepage = () => {
         data-dot-shape="circle"
         className="hidden md:block bg-black text-white p-12 font-unbounded"
       >
-        <div className="flex flex-col items-center pt-10 pb-5 space-y-3">
-          <h2 className="text-center text-4xl">Make Your Mark</h2>
-          <p className="opacity-60">
+        <div className="flex flex-col items-center pt-12 space-y-3">
+          <h2 className="text-center text-3xl sm:text-4xl">Make Your Mark</h2>
+          <p className="opacity-60 text-sm sm:text-md">
             start with nothing. end with something only you could make.
           </p>
         </div>
@@ -364,9 +360,9 @@ const Homepage = () => {
       {/* Bottom text */}
       <section
         data-dot-shape="square"
-        className="bg-black text-white flex flex-col items-center justify-center pt-6 pb-28 text-center space-y-2 font-unbounded"
+        className="bg-black text-white flex flex-col items-center justify-center py-28 sm:py-32 px-4 text-center space-y-14 font-unbounded"
       >
-        <div className="relative flex flex-col items-center gap-3 p-10">
+        <div className="relative flex flex-col items-center gap-4">
           <h1 className="text-4xl">Anything great</h1>
           <h1 className="text-4xl">begins on a</h1>
           <h1 className="text-4xl font-bethellen">Blank Canvas</h1>
