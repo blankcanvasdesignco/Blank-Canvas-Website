@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { animate, stagger } from "animejs";
-import lek_icon from "../assets/icons/lek_icon.png";
+import { animate, onScroll, utils } from "animejs";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const cardData = [
@@ -69,46 +68,48 @@ const cardData = [
 ];
 
 const Services = () => {
-  const [expanded, setExpanded] = useState({});
   const navigate = useNavigate();
-  const stacksRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false); // to ensure it runs once
 
-  const handleExpand = (index, expand = true) => {
-    animate(`.card-${index} .inner-card`, {
-      translateY: (el, i) => (expand ? i * 200 : 0), // vertical spread
-      rotate: (el, i) => (expand ? 0 : -4 + i * 4),
-      duration: 600,
-      easing: "easeOutExpo",
-      delay: stagger(100, { direction: expand ? "normal" : "reverse" }),
-    });
+  // const handleClick = () => {
+  //   utils.$(".square").forEach(($square) => {
+  //     const cards = $square.querySelectorAll(".inner-card");
+  //     cards.forEach(($card, index) => {
+  //       animate($card, {
+  //         translateY: `${index * 10}rem`, // move down based on card index
+  //         rotate: index === 0 ? "0turn" : "1turn", // 0th index: 0 turns, others: 1 turn
+  //         transformOrigin: "center center", // keep rotation in place
+  //         duration: 2000,
+  //         alternate: true,
+  //         ease: "inOutQuad",
+  //         autoplay: onScroll({
+  //           container: ".scroll-container",
+  //           sync: 1,
+  //           enter: "max bottom",
+  //           leave: "min top",
+  //         }),
+  //       });
+  //     });
+  //   });
+  // };
 
-    setExpanded((prev) => ({ ...prev, [index]: expand }));
-  };
-
-  // Trigger animation when stacks come into view
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting && !hasAnimated) {
-          cardData.forEach((_, index) => {
-            setTimeout(() => handleExpand(index, true), index * 500);
-          });
-          setHasAnimated(true);
-        }
-      },
-      { threshold: 0.3 } // 30% visible
-    );
-
-    if (stacksRef.current) {
-      observer.observe(stacksRef.current);
-    }
-
-    return () => {
-      if (stacksRef.current) observer.unobserve(stacksRef.current);
-    };
-  }, [hasAnimated]);
+    utils.$(".square").forEach(($square) => {
+      animate($square, {
+        x: "15rem",
+        rotate: "1turn",
+        duration: 2000,
+        alternate: true,
+        ease: "inOutQuad",
+        autoplay: onScroll({
+          container: ".square-container",
+          sync: 1,
+          enter: { container: "600", target: "bottom" },
+          leave: { container: "100", target: "top" },
+          debug: true,
+        }),
+      });
+    });
+  }, []);
 
   return (
     <div className="bg-black text-white py-16 text-center px-4 font-unbounded">
@@ -118,36 +119,35 @@ const Services = () => {
         Like it's a song. It has to move you.
       </p>
 
+      <div className="square-container py-40 bg-blue-200">
+        <div className="py-24 bg-green-500">
+          <div className="square w-32 h-32 bg-yellow-200 rounded z-10">
+            Hello
+          </div>
+        </div>
+      </div>
+
       {/* Centered row of stacks */}
       <div
-        ref={stacksRef}
-        className="flex flex-row justify-center gap-16 p-4 pt-8 pb-12 transition-[height] duration-700"
-        style={{
-          height: Object.values(expanded).some(Boolean) ? "800px" : "220px",
-        }}
+        className=" flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
+        style={{ height: "220px" }}
       >
         {cardData.map((card, index) => (
           <div
             key={card.id}
-            className={`card-${index} relative w-36 h-36 cursor-pointer`}
+            className={` card-${index} relative w-36 h-36 cursor-pointer`}
           >
             {[0, 1, 2, 3].map((i) => (
               <div
+                // onClick={handleClick}
                 key={i}
-                className="inner-card absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 transition-all p-2"
+                className="inner-card absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
+                data-rotate={
+                  i === 0 ? -8 : i === 1 ? -4 : i === 2 ? 0 : i === 3 ? 4 : 8
+                }
                 style={{
                   zIndex: 5 - i,
-                  transform: `rotate(${
-                    i === 0
-                      ? "-8deg"
-                      : i === 1
-                      ? "-4deg"
-                      : i === 2
-                      ? "0deg"
-                      : i === 3
-                      ? "4deg"
-                      : "8deg"
-                  })`,
+                  transformOrigin: "center center", // important for in-place rotation
                 }}
               >
                 {i === 0 ? (
