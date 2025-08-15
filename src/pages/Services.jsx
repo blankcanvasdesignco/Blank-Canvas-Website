@@ -93,9 +93,36 @@ const Services = () => {
   // };
 
   useEffect(() => {
-    utils.$(".square").forEach(($square) => {
+    const squares = utils.$(".square");
+    for (let index = 0; index < squares.length; index++) {
+      let enter, leave;
+      switch (index) {
+        case 0:
+          enter = { container: "0", target: "0" };
+          leave = { container: "0", target: "0" };
+          break;
+        case 1:
+          enter = { container: "320", target: "bottom" };
+          leave = { container: "120", target: "top" };
+          break;
+        case 2:
+          enter = { container: "300", target: "bottom" };
+          leave = { container: "160", target: "top" };
+          break;
+        case 3:
+          enter = { container: "250", target: "bottom" };
+          leave = { container: "200", target: "top" };
+          break;
+        default:
+          enter = { container: "400", target: "bottom" };
+          leave = { container: "80", target: "top" };
+          break;
+      }
+
+      const $square = squares[index];
+
       animate($square, {
-        x: "15rem",
+        y: `${index * 10}rem`,
         rotate: "1turn",
         duration: 2000,
         alternate: true,
@@ -103,12 +130,12 @@ const Services = () => {
         autoplay: onScroll({
           container: ".square-container",
           sync: 1,
-          enter: { container: "600", target: "bottom" },
-          leave: { container: "100", target: "top" },
+          enter,
+          leave,
           debug: true,
         }),
       });
-    });
+    }
   }, []);
 
   return (
@@ -119,20 +146,20 @@ const Services = () => {
         Like it's a song. It has to move you.
       </p>
 
-      <div className="square-container py-40 bg-blue-200">
+      {/* <div className="py-40 bg-blue-200">
         <div className="py-24 bg-green-500">
           <div className="square w-32 h-32 bg-yellow-200 rounded z-10">
             Hello
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Centered row of stacks */}
       <div
         className=" flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
-        style={{ height: "220px" }}
+        style={{ height: "800px" }}
       >
-        {cardData.map((card, index) => (
+        {/* {cardData.map((card, index) => (
           <div
             key={card.id}
             className={` card-${index} relative w-36 h-36 cursor-pointer`}
@@ -141,7 +168,7 @@ const Services = () => {
               <div
                 // onClick={handleClick}
                 key={i}
-                className="inner-card absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
+                className="square absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
                 data-rotate={
                   i === 0 ? -8 : i === 1 ? -4 : i === 2 ? 0 : i === 3 ? 4 : 8
                 }
@@ -163,7 +190,36 @@ const Services = () => {
               </div>
             ))}
           </div>
-        ))}
+        ))} */}
+
+        {/* Only one cardData for now */}
+        <div className="card-0 relative w-36 h-36 cursor-pointer">
+          {[0, 1, 2, 3].map((i) => (
+            <div
+              // onClick={handleClick}
+              key={i}
+              className="square absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
+              data-rotate={
+                i === 0 ? -8 : i === 1 ? -4 : i === 2 ? 0 : i === 3 ? 4 : 8
+              }
+              style={{
+                zIndex: 5 - i,
+                transformOrigin: "center center", // important for in-place rotation
+              }}
+            >
+              {i === 0 ? (
+                <span className="text-sm">{cardData[0].title}</span>
+              ) : (
+                <div className="text-center">
+                  <h3 className="text-xs">{cardData[0].items[i - 1].title}</h3>
+                  <p className="text-[10px] text-gray-300 mt-1">
+                    {cardData[0].items[i - 1].description}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-16">
