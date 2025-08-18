@@ -83,20 +83,20 @@ const Services = () => {
             leave = { container: "0", target: "0" };
             break;
           case 1:
-            enter = { container: "320", target: "bottom" };
-            leave = { container: "120", target: "top" };
+            enter = { container: "350", target: "bottom" };
+            leave = { container: "150", target: "top" };
             break;
           case 2:
-            enter = { container: "320", target: "bottom+=120" };
-            leave = { container: "120", target: "top+=120" };
+            enter = { container: "350", target: "bottom+=120" };
+            leave = { container: "150", target: "top+=120" };
             break;
           case 3:
-            enter = { container: "320", target: "bottom+=240" };
-            leave = { container: "120", target: "top+=240" };
+            enter = { container: "350", target: "bottom+=240" };
+            leave = { container: "150", target: "top+=240" };
             break;
           default:
-            enter = { container: "320", target: "bottom+=360" };
-            leave = { container: "120", target: "top+=360" };
+            enter = { container: "350", target: "bottom+=360" };
+            leave = { container: "150", target: "top+=360" };
             break;
         }
 
@@ -129,6 +129,7 @@ const Services = () => {
             sync: 1,
             enter,
             leave,
+            // debug: true,
           }),
         });
       }
@@ -156,52 +157,52 @@ const Services = () => {
           leave = { container: "0", target: "0" };
           break;
         case 1:
-          enter = { container: "240", target: "bottom" };
-          leave = { container: "40", target: "top" };
+          enter = { container: "400", target: "bottom" };
+          leave = { container: "200", target: "top" };
           break;
         case 2:
-          enter = { container: "240", target: "bottom+=120" };
-          leave = { container: "40", target: "top+=120" };
+          enter = { container: "400", target: "bottom+=120" };
+          leave = { container: "200", target: "top+=120" };
           break;
         case 3:
-          enter = { container: "240", target: "bottom+=240" };
-          leave = { container: "40", target: "top+=240" };
+          enter = { container: "400", target: "bottom+=240" };
+          leave = { container: "200", target: "top+=240" };
           break;
         case 4:
           enter = { container: "0", target: "0" };
           leave = { container: "0", target: "0" };
           break;
         case 5:
-          enter = { container: "240", target: "bottom" };
-          leave = { container: "40", target: "top" };
+          enter = { container: "400", target: "bottom" };
+          leave = { container: "200", target: "top" };
           break;
         case 6:
-          enter = { container: "240", target: "bottom+=120" };
-          leave = { container: "40", target: "top+=120" };
+          enter = { container: "400", target: "bottom+=120" };
+          leave = { container: "200", target: "top+=120" };
           break;
         case 7:
-          enter = { container: "240", target: "bottom+=240" };
-          leave = { container: "40", target: "top+=240" };
+          enter = { container: "400", target: "bottom+=240" };
+          leave = { container: "200", target: "top+=240" };
           break;
         case 8:
           enter = { container: "0", target: "0" };
           leave = { container: "0", target: "0" };
           break;
         case 9:
-          enter = { container: "240", target: "bottom" };
-          leave = { container: "40", target: "top" };
+          enter = { container: "400", target: "bottom" };
+          leave = { container: "200", target: "top" };
           break;
         case 10:
-          enter = { container: "240", target: "bottom+=120" };
-          leave = { container: "40", target: "top+=120" };
+          enter = { container: "400", target: "bottom+=120" };
+          leave = { container: "200", target: "top+=120" };
           break;
         case 11:
-          enter = { container: "240", target: "bottom+=240" };
-          leave = { container: "40", target: "top+=240" };
+          enter = { container: "400", target: "bottom+=240" };
+          leave = { container: "200", target: "top+=240" };
           break;
         default:
-          enter = { container: "240", target: "bottom" };
-          leave = { container: "40", target: "top" };
+          enter = { container: "400", target: "bottom" };
+          leave = { container: "200", target: "top" };
           break;
       }
 
