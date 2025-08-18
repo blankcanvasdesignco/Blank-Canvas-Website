@@ -70,28 +70,6 @@ const cardData = [
 const Services = () => {
   const navigate = useNavigate();
 
-  // const handleClick = () => {
-  //   utils.$(".square").forEach(($square) => {
-  //     const cards = $square.querySelectorAll(".inner-card");
-  //     cards.forEach(($card, index) => {
-  //       animate($card, {
-  //         translateY: `${index * 10}rem`, // move down based on card index
-  //         rotate: index === 0 ? "0turn" : "1turn", // 0th index: 0 turns, others: 1 turn
-  //         transformOrigin: "center center", // keep rotation in place
-  //         duration: 2000,
-  //         alternate: true,
-  //         ease: "inOutQuad",
-  //         autoplay: onScroll({
-  //           container: ".scroll-container",
-  //           sync: 1,
-  //           enter: "max bottom",
-  //           leave: "min top",
-  //         }),
-  //       });
-  //     });
-  //   });
-  // };
-
   // For screens >= 640px
   useEffect(() => {
     if (window.innerWidth < 640) return;
@@ -157,6 +135,7 @@ const Services = () => {
     });
   }, []);
 
+  // For screens < 640px
   useEffect(() => {
     if (window.innerWidth >= 640) return; // only runs for >= 640px
 
@@ -254,15 +233,7 @@ const Services = () => {
         Like it's a song. It has to move you.
       </p>
 
-      {/* <div className="py-40 bg-blue-200">
-        <div className="py-24 bg-green-500">
-          <div className="square w-32 h-32 bg-yellow-200 rounded z-10">
-            Hello
-          </div>
-        </div>
-      </div> */}
-
-      {/* Centered row of stacks */}
+      {/* for bigger screens */}
       <div
         className="hidden sm:flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
         style={{ height: "700px" }}
@@ -304,6 +275,7 @@ const Services = () => {
         ))}
       </div>
 
+      {/* for smaller screens */}
       <div
         className="sm:hidden flex flex-col items-center gap-140 justify-center p-4 pt-8 pb-120"
         style={{ minHeight: "400px" }}

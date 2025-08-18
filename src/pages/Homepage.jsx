@@ -211,7 +211,7 @@ const Homepage = () => {
     <div className="min-h-screen text-black">
       <DotTracker />
       {/* Hero Section */}
-      <section className="bg-white flex flex-col items-center justify-center py-18 text-center space-y-12 font-unbounded">
+      <section className="bg-white flex flex-col items-center justify-center py-28 sm:py-36 lg:py-40 text-center space-y-12 font-unbounded">
         <div className="relative flex flex-col items-center space-y-2 gap-3 max-w-[85%] sm:max-w-[80%] lg:max-w-[50%]">
           <h1 className="text-3xl sm:text-4xl">
             Building tools that help you create every day
