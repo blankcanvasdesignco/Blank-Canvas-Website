@@ -92,7 +92,9 @@ const Services = () => {
   //   });
   // };
 
+  // For screens >= 640px
   useEffect(() => {
+    if (window.innerWidth < 640) return;
     cardData.forEach((_, colIndex) => {
       const squares = utils.$(`.card-${colIndex} .square`);
       for (let index = 0; index < squares.length; index++) {
@@ -121,9 +123,26 @@ const Services = () => {
         }
 
         const $square = squares[index];
+        let rotateDeg;
+        switch (index) {
+          case 0:
+            rotateDeg = 360;
+            break;
+          case 1:
+            rotateDeg = 354;
+            break;
+          case 2:
+            rotateDeg = 348;
+            break;
+          case 3:
+            rotateDeg = 342;
+            break;
+          default:
+            rotateDeg = 0;
+        }
         animate($square, {
-          y: `${index * 10}rem`,
-          rotate: "1turn",
+          y: `${index * 11}rem`,
+          rotate: `${rotateDeg}deg`,
           duration: 2000,
           alternate: true,
           ease: "inOutQuad",
@@ -137,6 +156,95 @@ const Services = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (window.innerWidth >= 640) return; // only runs for >= 640px
+
+    let allSquares = [];
+    for (let colIndex = 0; colIndex < 12; colIndex++) {
+      const squares = utils.$(`.square-${colIndex}`);
+      for (let i = 0; i < squares.length; i++) {
+        allSquares.push(squares[i]);
+      }
+    }
+
+    for (let index = 0; index < allSquares.length; index++) {
+      let enter, leave;
+
+      switch (index) {
+        case 0:
+          enter = { container: "0", target: "0" };
+          leave = { container: "0", target: "0" };
+          break;
+        case 1:
+          enter = { container: "240", target: "bottom" };
+          leave = { container: "40", target: "top" };
+          break;
+        case 2:
+          enter = { container: "240", target: "bottom+=120" };
+          leave = { container: "40", target: "top+=120" };
+          break;
+        case 3:
+          enter = { container: "240", target: "bottom+=240" };
+          leave = { container: "40", target: "top+=240" };
+          break;
+        case 4:
+          enter = { container: "0", target: "0" };
+          leave = { container: "0", target: "0" };
+          break;
+        case 5:
+          enter = { container: "240", target: "bottom" };
+          leave = { container: "40", target: "top" };
+          break;
+        case 6:
+          enter = { container: "240", target: "bottom+=120" };
+          leave = { container: "40", target: "top+=120" };
+          break;
+        case 7:
+          enter = { container: "240", target: "bottom+=240" };
+          leave = { container: "40", target: "top+=240" };
+          break;
+        case 8:
+          enter = { container: "0", target: "0" };
+          leave = { container: "0", target: "0" };
+          break;
+        case 9:
+          enter = { container: "240", target: "bottom" };
+          leave = { container: "40", target: "top" };
+          break;
+        case 10:
+          enter = { container: "240", target: "bottom+=120" };
+          leave = { container: "40", target: "top+=120" };
+          break;
+        case 11:
+          enter = { container: "240", target: "bottom+=240" };
+          leave = { container: "40", target: "top+=240" };
+          break;
+        default:
+          enter = { container: "240", target: "bottom" };
+          leave = { container: "40", target: "top" };
+          break;
+      }
+
+      const rotationArr = [360, 354, 348, 342];
+      let rotateDeg = rotationArr[index % 4];
+      let yValue = (index % 4) * 11;
+
+      animate(allSquares[index], {
+        y: `${yValue}rem`,
+        rotate: `${rotateDeg}deg`,
+        duration: 2000,
+        alternate: true,
+        ease: "inOutQuad",
+        autoplay: onScroll({
+          container: ".square-container",
+          sync: 1,
+          enter,
+          leave,
+        }),
+      });
+    }
+  }, [cardData]);
 
   return (
     <div className="bg-black text-white py-16 text-center px-4 font-unbounded">
@@ -156,38 +264,85 @@ const Services = () => {
 
       {/* Centered row of stacks */}
       <div
-        className="flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
-        style={{ height: "680px" }}
+        className="hidden sm:flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
+        style={{ height: "700px" }}
       >
         {cardData.map((card, colIndex) => (
           <div
             key={card.id}
             className={`card-${colIndex} relative w-36 h-36 cursor-pointer`}
           >
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="square absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
-                data-rotate={
-                  i === 0 ? -8 : i === 1 ? -4 : i === 2 ? 0 : i === 3 ? 4 : 8
-                }
-                style={{
-                  zIndex: 5 - i,
-                  transformOrigin: "center center",
-                }}
-              >
-                {i === 0 ? (
-                  <span className="text-sm">{card.title}</span>
-                ) : (
-                  <div className="text-center">
-                    <h3 className="text-xs">{card.items[i - 1].title}</h3>
-                    <p className="text-[10px] text-gray-300 mt-1">
-                      {card.items[i - 1].description}
-                    </p>
+            {[0, 1, 2, 3].map((i) => {
+              const baseRot = [0, 6, 12, 18][i]; // your default “messy stack” angles
+              return (
+                <div
+                  key={i}
+                  className="square absolute inset-0" // ← this is what you already animate
+                  style={{ zIndex: 5 - i, transformOrigin: "center" }}
+                  data-index={i}
+                >
+                  <div
+                    className="square-face w-full h-full border-2 border-dashed border-white rounded-md
+                        flex flex-col items-center justify-center bg-neutral-900 p-2"
+                    style={{ transform: `rotate(${baseRot}deg)` }} // ← static initial tilt
+                  >
+                    {i === 0 ? (
+                      <span className="text-sm">{card.title}</span>
+                    ) : (
+                      <div className="text-center">
+                        <h3 className="text-xs">{card.items[i - 1].title}</h3>
+                        <p className="text-[10px] text-gray-300 mt-1">
+                          {card.items[i - 1].description}
+                        </p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+
+      <div
+        className="sm:hidden flex flex-col items-center gap-140 justify-center p-4 pt-8 pb-120"
+        style={{ minHeight: "400px" }}
+      >
+        {cardData.map((card, colIndex) => (
+          <div
+            key={card.id}
+            className={`card-${colIndex} relative w-36 h-36 cursor-pointer mb-12`}
+          >
+            {[0, 1, 2, 3].map((i) => {
+              const baseRot = [0, 6, 12, 18][i];
+              const globalIndex = colIndex * 4 + i;
+
+              return (
+                <div
+                  key={i}
+                  className={`square-${globalIndex} absolute inset-0`}
+                  style={{ zIndex: 5 - i, transformOrigin: "center" }}
+                  data-index={globalIndex}
+                >
+                  <div
+                    className="square-face w-full h-full border-2 border-dashed border-white rounded-md
+                flex flex-col items-center justify-center bg-neutral-900 p-2"
+                    style={{ transform: `rotate(${baseRot}deg)` }}
+                  >
+                    {i === 0 ? (
+                      <span className="text-sm">{card.title}</span>
+                    ) : (
+                      <div className="text-center">
+                        <h3 className="text-xs">{card.items[i - 1].title}</h3>
+                        <p className="text-[10px] text-gray-300 mt-1">
+                          {card.items[i - 1].description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>
