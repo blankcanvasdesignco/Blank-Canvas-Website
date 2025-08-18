@@ -93,49 +93,49 @@ const Services = () => {
   // };
 
   useEffect(() => {
-    const squares = utils.$(".square");
-    for (let index = 0; index < squares.length; index++) {
-      let enter, leave;
-      switch (index) {
-        case 0:
-          enter = { container: "0", target: "0" };
-          leave = { container: "0", target: "0" };
-          break;
-        case 1:
-          enter = { container: "320", target: "bottom" };
-          leave = { container: "120", target: "top" };
-          break;
-        case 2:
-          enter = { container: "300", target: "bottom" };
-          leave = { container: "160", target: "top" };
-          break;
-        case 3:
-          enter = { container: "250", target: "bottom" };
-          leave = { container: "200", target: "top" };
-          break;
-        default:
-          enter = { container: "400", target: "bottom" };
-          leave = { container: "80", target: "top" };
-          break;
+    cardData.forEach((_, colIndex) => {
+      const squares = utils.$(`.card-${colIndex} .square`);
+      for (let index = 0; index < squares.length; index++) {
+        let enter, leave;
+        switch (index) {
+          case 0:
+            enter = { container: "0", target: "0" };
+            leave = { container: "0", target: "0" };
+            break;
+          case 1:
+            enter = { container: "320", target: "bottom" };
+            leave = { container: "120", target: "top" };
+            break;
+          case 2:
+            enter = { container: "320", target: "bottom+=120" };
+            leave = { container: "120", target: "top+=120" };
+            break;
+          case 3:
+            enter = { container: "320", target: "bottom+=240" };
+            leave = { container: "120", target: "top+=240" };
+            break;
+          default:
+            enter = { container: "320", target: "bottom+=360" };
+            leave = { container: "120", target: "top+=360" };
+            break;
+        }
+
+        const $square = squares[index];
+        animate($square, {
+          y: `${index * 10}rem`,
+          rotate: "1turn",
+          duration: 2000,
+          alternate: true,
+          ease: "inOutQuad",
+          autoplay: onScroll({
+            container: ".square-container", // your scroll container
+            sync: 1,
+            enter,
+            leave,
+          }),
+        });
       }
-
-      const $square = squares[index];
-
-      animate($square, {
-        y: `${index * 10}rem`,
-        rotate: "1turn",
-        duration: 2000,
-        alternate: true,
-        ease: "inOutQuad",
-        autoplay: onScroll({
-          container: ".square-container",
-          sync: 1,
-          enter,
-          leave,
-          debug: true,
-        }),
-      });
-    }
+    });
   }, []);
 
   return (
@@ -156,17 +156,16 @@ const Services = () => {
 
       {/* Centered row of stacks */}
       <div
-        className=" flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
-        style={{ height: "800px" }}
+        className="flex flex-row justify-center gap-16 p-4 pt-8 pb-12"
+        style={{ height: "680px" }}
       >
-        {/* {cardData.map((card, index) => (
+        {cardData.map((card, colIndex) => (
           <div
             key={card.id}
-            className={` card-${index} relative w-36 h-36 cursor-pointer`}
+            className={`card-${colIndex} relative w-36 h-36 cursor-pointer`}
           >
             {[0, 1, 2, 3].map((i) => (
               <div
-                // onClick={handleClick}
                 key={i}
                 className="square absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
                 data-rotate={
@@ -174,7 +173,7 @@ const Services = () => {
                 }
                 style={{
                   zIndex: 5 - i,
-                  transformOrigin: "center center", // important for in-place rotation
+                  transformOrigin: "center center",
                 }}
               >
                 {i === 0 ? (
@@ -190,36 +189,7 @@ const Services = () => {
               </div>
             ))}
           </div>
-        ))} */}
-
-        {/* Only one cardData for now */}
-        <div className="card-0 relative w-36 h-36 cursor-pointer">
-          {[0, 1, 2, 3].map((i) => (
-            <div
-              // onClick={handleClick}
-              key={i}
-              className="square absolute inset-0 border-2 border-dashed border-white rounded-md flex flex-col items-center justify-center bg-neutral-900 p-2"
-              data-rotate={
-                i === 0 ? -8 : i === 1 ? -4 : i === 2 ? 0 : i === 3 ? 4 : 8
-              }
-              style={{
-                zIndex: 5 - i,
-                transformOrigin: "center center", // important for in-place rotation
-              }}
-            >
-              {i === 0 ? (
-                <span className="text-sm">{cardData[0].title}</span>
-              ) : (
-                <div className="text-center">
-                  <h3 className="text-xs">{cardData[0].items[i - 1].title}</h3>
-                  <p className="text-[10px] text-gray-300 mt-1">
-                    {cardData[0].items[i - 1].description}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
 
       <div className="mt-16">

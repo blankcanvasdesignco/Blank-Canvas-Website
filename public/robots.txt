@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://blankcanvasdesignco.github.io/Blank-Canvas-Website/sitemap.xml
+
+Sitemap: https://blankcanvasdesign.co/sitemap.xml
