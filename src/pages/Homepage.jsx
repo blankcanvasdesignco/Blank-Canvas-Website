@@ -27,6 +27,7 @@ import Navbar from "../components/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import CanvasEditor from "../components/CanvasEditor";
 import DotTracker from "../components/DotTracker";
+import MobileCanvas from "../components/MobileCanvas";
 
 const tiles = [
   {
@@ -211,7 +212,7 @@ const Homepage = () => {
     <div className="min-h-screen text-black">
       <DotTracker />
       {/* Hero Section */}
-      <section className="bg-white flex flex-col items-center justify-center py-28 sm:py-36 lg:py-40 text-center space-y-12 font-unbounded">
+      <section className="bg-white flex flex-col items-center justify-center py-28 sm:py-32 2xl:py-36 text-center space-y-12 font-unbounded">
         <div className="relative flex flex-col items-center space-y-2 gap-3 max-w-[85%] sm:max-w-[80%] lg:max-w-[50%]">
           <h1 className="text-3xl sm:text-4xl">
             Building tools that help you create every day
@@ -346,15 +347,20 @@ const Homepage = () => {
       {/* Canvas */}
       <section
         data-dot-shape="circle"
-        className="hidden md:block bg-black text-white p-12 font-unbounded"
+        className=" bg-black text-white pt-12 font-unbounded"
       >
-        <div className="flex flex-col items-center pt-12 space-y-3">
+        <div className="flex flex-col items-center pt-12 px-4 space-y-3">
           <h2 className="text-center text-3xl sm:text-4xl">Make Your Mark</h2>
-          <p className="opacity-60 text-sm sm:text-md">
+          <p className="opacity-60 text-sm sm:text-md text-center">
             start with nothing. end with something only you could make.
           </p>
         </div>
-        <CanvasEditor />
+        <div className="hidden md:block">
+          <CanvasEditor />
+        </div>
+        <div className="md:hidden">
+          <MobileCanvas />
+        </div>
       </section>
 
       {/* Bottom text */}

@@ -14,7 +14,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-black text-white font-unbounded pt-12 py-16">
+    <div className="bg-black text-white font-unbounded pb-10">
       <div className="flex flex-col items-center justify-center px-4 py-20">
         <h1 className="text-3xl font-semibold mb-2">Let’s Talk</h1>
         <p className="text-sm text-gray-200 text-center mb-10">
