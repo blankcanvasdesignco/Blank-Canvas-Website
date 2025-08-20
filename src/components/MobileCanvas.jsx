@@ -1,7 +1,4 @@
-import {
-  ArrowDownOnSquareIcon,
-  ArrowPathIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowDownOnSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState, useEffect } from "react";
 import {
   Stage,
@@ -133,10 +130,22 @@ const MobileCanvas = () => {
     const handleResize = () => {
       const screenWidth = window.innerWidth;
 
-      if (screenWidth >= 500 && screenWidth <= 768) {
+      if (screenWidth >= 320 && screenWidth < 350) {
+        setStageSize(300);
+      } else if (screenWidth >= 350 && screenWidth < 400) {
+        setStageSize(330);
+      } else if (screenWidth >= 400 && screenWidth < 450) {
+        setStageSize(380);
+      } else if (screenWidth >= 450 && screenWidth < 500) {
+        setStageSize(430);
+      } else if (screenWidth >= 500 && screenWidth < 600) {
         setStageSize(480);
+      } else if (screenWidth >= 600 && screenWidth < 700) {
+        setStageSize(580);
+      } else if (screenWidth >= 700 && screenWidth < 768) {
+        setStageSize(680);
       } else {
-        setStageSize(300); // fallback size
+        setStageSize(300);
       }
     };
 
@@ -227,9 +236,9 @@ const MobileCanvas = () => {
         "
       >
         <div className="relative group flex items-center">
-          <ArrowPathIcon
+          <TrashIcon
             className={`bottom-4 left-4 h-6 w-6 cursor-pointer ${
-              selectedId ? "text-white" : "text-gray-500 pointer-events-none"
+              selectedId ? "text-white" : "opacity-60 pointer-events-none"
             }`}
             onClick={() => {
               if (!selectedId) return;

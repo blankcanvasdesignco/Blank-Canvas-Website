@@ -19,7 +19,7 @@ const cardData = [
       {
         title: "Rapid Prototyping",
         description:
-          "Beautiful interfaces that convert. Every screen. Every state.",
+          "Turn sketches into MVPs fast. Build only what matters, test with real users, and then scale.",
       },
     ],
   },
@@ -228,9 +228,12 @@ const Services = () => {
 
   return (
     <div className="bg-black text-white py-16 text-center px-4 font-unbounded">
-      <h2 className="text-2xl font-semibold mb-2">
+      <h2 className="sm:hidden text-2xl font-semibold mb-2">
         What We Do <br />
         (And Do Well)
+      </h2>
+      <h2 className="hidden sm:block text-2xl font-semibold mb-2">
+        What We Do (And Do Well)
       </h2>
       <p className="text-sm max-w-md mx-auto mb-16">
         From the first sketch to launch day, we build apps like they're art.

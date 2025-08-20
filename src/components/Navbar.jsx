@@ -64,7 +64,7 @@ const Navbar = () => {
       >
         {/* Close Button */}
         <div className="flex justify-between items-center p-6 border-b">
-          <span className="font-bold text-lg">Menu</span>
+          <span className="font-bold text-lg mx-auto">Menu</span>
           <button onClick={() => setIsOpen(false)} className="text-2xl">
             <XMarkIcon />
           </button>
