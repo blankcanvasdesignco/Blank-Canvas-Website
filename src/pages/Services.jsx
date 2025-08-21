@@ -335,12 +335,11 @@ const Services = () => {
           yours real.
         </h2>
       </div>
-      <buttonz
-        onClick={() => navigate("/contact")}
-        className="px-12 py-2 mt-8 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110"
-      >
-        Get in touch
-      </buttonz>
+      <a href="/#contact">
+        <button className="px-12 py-2 mt-8 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110">
+          Get in touch
+        </button>
+      </a>
     </div>
   );
 };
