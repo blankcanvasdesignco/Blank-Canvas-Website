@@ -223,14 +223,12 @@ const Homepage = () => {
           </h3>
         </div>
 
-        <button
-          onClick={() => {
-            window.location.href = "/#/contact";
-          }}
+        <a
+          href="/contact"
           className="px-12 py-2 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110"
         >
           Connect
-        </button>
+        </a>
       </section>
 
       {/* Portfolio */}
@@ -338,14 +336,12 @@ const Homepage = () => {
 
         {/* Button */}
 
-        <button
-          onClick={() => {
-            window.location.href = "/#/services";
-          }}
+        <a
+          href="/services"
           className="px-12 py-2 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110"
         >
           Learn more
-        </button>
+        </a>
       </section>
 
       {/* Canvas */}
@@ -378,14 +374,12 @@ const Homepage = () => {
           <h1 className="text-4xl font-bethellen">Blank Canvas</h1>
         </div>
 
-        <button
-          onClick={() => {
-            window.location.href = "/#/contact";
-          }}
+        <a
+          href="/contact"
           className="px-12 py-2 bg-white text-sm text-black border border-[#707070] rounded-[56px] opacity-100 shadow-[inset_0px_1.6px_4px_#000000,0px_3px_6px_#00000029] cursor-pointer transition-transform duration-200 hover:scale-110"
         >
           Get in touch
-        </button>
+        </a>
       </section>
     </div>
   );
