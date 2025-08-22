@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
         {/* Left Section */}
         <a
-          href="/"
+          href="/#"
           className="order-2 sm:order-1 cursor-pointer space-y-4 flex flex-col items-center sm:items-start text-center sm:text-left w-full sm:w-auto"
         >
           <h2 className="font-bethellen text-md">Blank Canvas Design Co.</h2>
