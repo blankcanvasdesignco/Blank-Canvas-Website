@@ -250,9 +250,13 @@ const Homepage = () => {
                     className={`portfolio portfolio-${i} relative bg-[#000000] rounded-md w-32 sm:w-40 border-[#374151] border-1 z-5`}
                   >
                     <img
-                      className="object-cover rounded-md"
+                      className="object-cover rounded-md cursor-pointer"
                       src={item.icon}
                       alt={`Portfolio icon ${i + 1}`}
+                      onClick={() =>
+                        window.open(item.link, "_blank", "noopener,noreferrer")
+                      }
+                      rel="noopener noreferrer"
                     />
                   </div>
                   <div className="absolute border border-[#6b7280] border-dashed rounded-md inset-0 flex flex-col items-center justify-center text-center p-4 space-y-1 pointer-events-none">
