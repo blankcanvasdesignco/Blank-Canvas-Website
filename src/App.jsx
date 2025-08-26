@@ -5,6 +5,8 @@ import Homepage from "./pages/Homepage";
 import Contact from "./pages/Contact";
 import Services from "./pages/Services";
 import ScrollToTop from "./components/ScrollToTop"; // 👈 import here
+import Blogs from "./pages/Blogs";
+import Blog from "./pages/Blog";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:uid" element={<Blog />} />
           {/* <Route path="/canvas" element={<CanvasEditor />} /> */}
         </Routes>
         <Footer />

@@ -16,6 +16,7 @@
 }
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-syne: Syne, "sans-serif";
