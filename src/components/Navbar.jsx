@@ -44,6 +44,7 @@ const Navbar = () => {
           >
             Services
           </button>
+          <Link to="/blogs">Blogs</Link>
           <Link to="/contact">Contact</Link>
         </div>
 
@@ -84,6 +85,13 @@ const Navbar = () => {
             className="cursor-pointer"
           >
             Services
+          </Link>
+          <Link
+            to="/blogs"
+            onClick={() => setIsOpen(false)}
+            className="cursor-pointer"
+          >
+            Blogs
           </Link>
           <Link
             to="/contact"
