@@ -8,7 +8,7 @@ export default function Blog() {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    client.getByUID("BlankCanvasBlog", uid).then((data) => {
+    client.getByUID("blankcanvasblog", uid).then((data) => {
       setPost(data);
     });
   }, [uid]);
@@ -39,7 +39,7 @@ export default function Blog() {
         {/* Meta info */}
         <div className="flex flex-col opacity-60 space-y-1 text-xs mb-10">
           <span>By: {post.data.author_name}</span>
-          <span>Published on: {post.data.publish_date}</span>
+          <span>Published on: {post.data.published_date}</span>
         </div>
 
         {/* Content */}

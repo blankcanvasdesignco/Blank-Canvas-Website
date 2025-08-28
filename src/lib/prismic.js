@@ -5,5 +5,5 @@ const endpoint = prismic.getRepositoryEndpoint(repoName);
 
 export const client = prismic.createClient(endpoint, {
   accessToken: import.meta.env.VITE_PRISMIC_ACCESS_TOKEN, // only if repo is private
-  routes: [{ type: "blog_posts", path: "/blogs/:uid" }],
+  routes: [{ type: "blankcanvasblog", path: "/blogs/:uid" }],
 });

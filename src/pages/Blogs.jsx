@@ -8,20 +8,23 @@ export default function Blogs() {
 
   useEffect(() => {
     client
-      .getAllByType("BlankCanvasBlog", {
-        orderings: [{ field: "my.BlankCanvasBlog.publish_date", direction: "desc" }],
+      .getAllByType("blankcanvasblog", {
+        orderings: [
+          { field: "my.blankcanvasblog.publish_date", direction: "desc" },
+        ],
       })
       .then((data) => {
+        console.log(data);
         setPosts(data);
       });
   }, []);
 
   return (
     <div className="min-h-screen font-unbounded bg-black text-white">
-      <div className="max-w-6xl mx-4 sm:mx-8 py-12 space-y-12">
+      <div className="mx-4 flex flex-col items-center py-12">
         <h1 className="text-3xl font-semibold">Blog</h1>
 
-        <ul className="space-y-12">
+        <ul className="mt-12">
           {posts.map((p) => (
             <li
               key={p.uid}
@@ -32,13 +35,13 @@ export default function Blogs() {
                 <Link to={p.url} className="flex-shrink-0">
                   <PrismicImage
                     field={p.data.cover_image}
-                    className="w-[350px] h-[200px] rounded-xl object-cover"
+                    className="w-[350px] lg:w-[500px] h-[200px] lg:h-[285px] rounded-xl object-cover"
                   />
                 </Link>
               )}
 
               {/* Text content */}
-              <div className="flex flex-col items-start h-[200px] justify-start md:justify-around">
+              <div className="flex flex-col items-start h-[200px] lg:h-[285px] justify-start md:justify-around">
                 <Link to={p.url}>
                   <h2 className="text-2xl mb-1 md:mb-3">
                     <PrismicText field={p.data.title} />
