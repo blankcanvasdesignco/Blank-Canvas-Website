@@ -8,7 +8,7 @@ export default function Blog() {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
-    client.getByUID("blog_posts", uid).then((data) => {
+    client.getByUID("BlankCanvasBlog", uid).then((data) => {
       setPost(data);
     });
   }, [uid]);

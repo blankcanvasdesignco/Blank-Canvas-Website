@@ -8,8 +8,8 @@ export default function Blogs() {
 
   useEffect(() => {
     client
-      .getAllByType("blog_posts", {
-        orderings: [{ field: "my.blog_posts.publish_date", direction: "desc" }],
+      .getAllByType("BlankCanvasBlog", {
+        orderings: [{ field: "my.BlankCanvasBlog.publish_date", direction: "desc" }],
       })
       .then((data) => {
         setPosts(data);
