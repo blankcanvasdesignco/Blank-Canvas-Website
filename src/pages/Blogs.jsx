@@ -18,7 +18,7 @@ export default function Blogs() {
 
   return (
     <div className="min-h-screen font-unbounded bg-black text-white">
-      <div className="max-w-6xl mx-auto py-12 space-y-12">
+      <div className="max-w-6xl mx-4 sm:mx-8 py-12 space-y-12">
         <h1 className="text-3xl font-semibold">Blog</h1>
 
         <ul className="space-y-12">
@@ -38,20 +38,20 @@ export default function Blogs() {
               )}
 
               {/* Text content */}
-              <div className="flex flex-col items-start h-[200px] justify-around">
+              <div className="flex flex-col items-start h-[200px] justify-start md:justify-around">
                 <Link to={p.url}>
-                  <h2 className="text-2xl mb-3">
+                  <h2 className="text-2xl mb-1 md:mb-3">
                     <PrismicText field={p.data.title} />
                   </h2>
                 </Link>
 
                 {/* Subtext / Description */}
-                <p className="opacity-60 text-sm max-w-xl mb-4 line-clamp-3">
+                <p className="opacity-60 text-sm max-w-xl mb-2 md:mb-4 line-clamp-3">
                   <PrismicText field={p.data.seo_title} />
                 </p>
 
                 {/* Meta info */}
-                <div className="text-xs opacity-60 flex flex-wrap gap-4 mb-4">
+                <div className="text-xs opacity-60 flex flex-wrap gap-4 mb-3 md:mb-4">
                   <span>
                     {p.data.reading_time} min read | {p.data.author_name}{" "}
                   </span>
