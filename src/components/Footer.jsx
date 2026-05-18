@@ -57,7 +57,7 @@ const Footer = () => {
           href="/"
           className="order-2 sm:order-1 cursor-pointer space-y-4 flex flex-col items-center sm:items-start text-center sm:text-left w-full sm:w-auto"
         >
-          <h2 className="font-bethellen text-md">Blank Canvas Design Co.</h2>
+          <h2 className="font-bethellen text-md">Blank Canvas Designs Private Limited.</h2>
           <p className="font-bethellen text-[10px] pr-3">
             Made in India, for the world
           </p>
